@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#ece8df; font-family:'Barlow',Helvetica,sans-serif; overflow-x:hidden; }
+
+    @keyframes panelIn {
+      from { opacity:0; transform:translateY(16px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes revealUp {
+      from { opacity:0; transform:translateY(28px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .svc-row {
+      display:flex; align-items:center; gap:20px;
+      padding:21px 0;
+      border-top:1px solid rgba(236,232,223,0.08);
+      cursor:pointer;
+    }
+    .svc-row:last-child { border-bottom:1px solid rgba(236,232,223,0.08); }
+
+    .reveal {
+      opacity:0; transform:translateY(26px);
+      transition:opacity 0.78s cubic-bezier(0.22,1,0.36,1), transform 0.78s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    #svc-panel { animation:panelIn 0.55s cubic-bezier(0.22,1,0.36,1) forwards; }
+  </style>
+</helmet>
+
+<section style="width:100%; min-width:1440px; min-height:100vh; display:flex; font-family:'Barlow',Helvetica,sans-serif;">
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!--  LEFT — DARK HALF                             -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div style="width:50%; background:#3e1508; padding:96px 72px; display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden;">
+
+    <!-- Ghost "DO" watermark -->
+    <div aria-hidden="true" style="position:absolute; right:-8px; top:50%; transform:translateY(-50%); font-size:22vw; font-weight:800; letter-spacing:-0.03em; color:rgba(236,232,223,0.04); line-height:0.85; pointer-events:none; user-select:none; white-space:nowrap;">DO</div>
+
+    <!-- Corner accents -->
+    <div style="position:absolute; top:44px; left:44px; width:22px; height:22px; border-top:1px solid rgba(236,232,223,0.14); border-left:1px solid rgba(236,232,223,0.14); pointer-events:none;"></div>
+    <div style="position:absolute; bottom:44px; left:44px; width:22px; height:22px; border-bottom:1px solid rgba(236,232,223,0.14); border-left:1px solid rgba(236,232,223,0.14); pointer-events:none;"></div>
+
+    <!-- Section label -->
+    <div class="reveal" style="display:flex; align-items:center; gap:16px; margin-bottom:52px; position:relative; z-index:1;">
+      <span style="font-size:9px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(236,232,223,0.26);">03</span>
+      <div style="width:32px; height:1px; background:rgba(236,232,223,0.18);"></div>
+      <span style="font-size:9px; font-weight:400; letter-spacing:4.5px; text-transform:uppercase; color:rgba(236,232,223,0.34);">WHAT WE DO</span>
+    </div>
+
+    <!-- Service list -->
+    <div class="reveal" style="position:relative; z-index:1;">
+      <sc-for list="{{ services }}" as="svc" hint-placeholder-count="5">
+        <div class="svc-row" style="{{ svc.rowStyle }}" onClick="{{ svc.onClick }}" onMouseEnter="{{ svc.onEnter }}" onMouseLeave="{{ svc.onLeave }}">
+          <span style="{{ svc.numStyle }}">{{ svc.num }}</span>
+          <span style="{{ svc.nameStyle }}">{{ svc.name }}</span>
+          <div style="{{ svc.arrowStyle }}">
+            <svg width="20" height="10" viewBox="0 0 20 10" fill="none" stroke="#ece8df" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="0" y1="5" x2="18" y2="5"></line>
+              <polyline points="13,1 18,5 13,9"></polyline>
+            </svg>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- Bottom brand note -->
+    <div class="reveal" style="margin-top:52px; position:relative; z-index:1; display:flex; align-items:center; gap:12px;">
+      <div style="width:6px; height:6px; background:rgba(236,232,223,0.18); transform:rotate(45deg);"></div>
+      <span style="font-size:9px; font-weight:300; letter-spacing:3.5px; text-transform:uppercase; color:rgba(236,232,223,0.2);">ONE TEAM · EVERY DISCIPLINE</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!--  RIGHT — CREAM HALF                           -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div style="width:50%; background:#ece8df; padding:96px 72px; display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden;">
+
+    <!-- Ghost service number -->
+    <div aria-hidden="true" style="position:absolute; right:-20px; bottom:10px; font-size:28vw; font-weight:800; color:rgba(62,21,8,0.05); line-height:0.85; pointer-events:none; user-select:none; z-index:0;">{{ active.num }}</div>
+
+    <!-- Corner accent -->
+    <div style="position:absolute; top:44px; right:44px; width:22px; height:22px; border-top:1px solid rgba(62,21,8,0.13); border-right:1px solid rgba(62,21,8,0.13); pointer-events:none;"></div>
+    <div style="position:absolute; bottom:44px; right:44px; width:22px; height:22px; border-bottom:1px solid rgba(62,21,8,0.13); border-right:1px solid rgba(62,21,8,0.13); pointer-events:none;"></div>
+
+    <!-- Animated panel -->
+    <div id="svc-panel" style="position:relative; z-index:1;">
+
+      <!-- Category tag -->
+      <div style="font-size:9px; font-weight:600; letter-spacing:4.5px; text-transform:uppercase; color:rgba(62,21,8,0.36); margin-bottom:22px;">{{ active.tag }}</div>
+
+      <!-- Service name -->
+      <div style="font-size:48px; font-weight:300; letter-spacing:5px; text-transform:uppercase; color:#3e1508; line-height:1.0; margin-bottom:28px;">{{ active.name }}</div>
+
+      <!-- Short rule -->
+      <div style="width:52px; height:1.5px; background:rgba(62,21,8,0.2); margin-bottom:28px;"></div>
+
+      <!-- Description -->
+      <p style="font-size:14px; font-weight:300; line-height:1.92; letter-spacing:0.2px; color:rgba(62,21,8,0.66); max-width:390px; margin-bottom:44px; text-wrap:pretty;">{{ active.desc }}</p>
+
+      <!-- Stat -->
+      <div style="display:flex; align-items:baseline; gap:16px; padding-bottom:44px; border-bottom:1px solid rgba(62,21,8,0.1); margin-bottom:44px;">
+        <span style="font-size:60px; font-weight:800; letter-spacing:-2px; color:#3e1508; line-height:1;">{{ active.stat }}</span>
+        <span style="font-size:9px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:rgba(62,21,8,0.36); max-width:90px; line-height:1.65;">{{ active.statLabel }}</span>
+      </div>
+
+      <!-- Image placeholder -->
+      <div style="position:relative; width:100%; max-width:360px; aspect-ratio:3/2; background:rgba(62,21,8,0.035); border:1px solid rgba(62,21,8,0.1);">
+        <div style="position:absolute; top:10px; left:10px; width:16px; height:16px; border-top:1px solid rgba(62,21,8,0.22); border-left:1px solid rgba(62,21,8,0.22);"></div>
+        <div style="position:absolute; top:10px; right:10px; width:16px; height:16px; border-top:1px solid rgba(62,21,8,0.22); border-right:1px solid rgba(62,21,8,0.22);"></div>
+        <div style="position:absolute; bottom:10px; left:10px; width:16px; height:16px; border-bottom:1px solid rgba(62,21,8,0.22); border-left:1px solid rgba(62,21,8,0.22);"></div>
+        <div style="position:absolute; bottom:10px; right:10px; width:16px; height:16px; border-bottom:1px solid rgba(62,21,8,0.22); border-right:1px solid rgba(62,21,8,0.22);"></div>
+        <!-- Centered placeholder content -->
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:12px; opacity:0.22;">
+          <div style="width:26px; height:26px; border:1.5px solid #3e1508; transform:rotate(45deg);"></div>
+          <div style="font-size:8px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:#3e1508;">IMAGE PLACEHOLDER</div>
+        </div>
+        <!-- Accent bar -->
+        <div style="{{ active.accentBarStyle }}"></div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<template id="__bundler_thumbnail" data-bg-color="#3e1508">
+  <svg viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
+    <rect width="720" height="900" fill="#3e1508"/>
+    <rect x="720" width="720" height="900" fill="#ece8df"/>
+    <text x="80" y="320" font-family="Helvetica,Arial,sans-serif" font-size="72" font-weight="800" letter-spacing="3" fill="rgba(236,232,223,0.9)">ARCHI-</text>
+    <text x="80" y="420" font-family="Helvetica,Arial,sans-serif" font-size="72" font-weight="800" letter-spacing="3" fill="rgba(236,232,223,0.9)">TECTURE</text>
+    <text x="80" y="500" font-family="Helvetica,Arial,sans-serif" font-size="60" font-weight="800" letter-spacing="2" fill="rgba(236,232,223,0.35)">INTERIOR</text>
+    <text x="80" y="570" font-family="Helvetica,Arial,sans-serif" font-size="60" font-weight="800" letter-spacing="2" fill="rgba(236,232,223,0.2)">CONSTRUCTION</text>
+    <text x="80" y="630" font-family="Helvetica,Arial,sans-serif" font-size="60" font-weight="800" letter-spacing="2" fill="rgba(236,232,223,0.12)">LANDSCAPE</text>
+    <text x="800" y="260" font-family="Helvetica,Arial,sans-serif" font-size="11" font-weight="600" letter-spacing="5" fill="rgba(62,21,8,0.4)">FROM MASTERPLAN TO PERMIT</text>
+    <text x="800" y="320" font-family="Helvetica,Arial,sans-serif" font-size="48" font-weight="300" letter-spacing="5" fill="#3e1508">ARCHITECTURE</text>
+    <line x1="800" y1="356" x2="852" y2="356" stroke="rgba(62,21,8,0.22)" stroke-width="1.5"/>
+    <rect x="800" y="900" width="200" height="3" fill="rgba(107,29,13,0.55)"/>
+    <text x="80" y="180" font-family="Helvetica,Arial,sans-serif" font-size="9" font-weight="600" letter-spacing="5" fill="rgba(236,232,223,0.32)">03  ——  WHAT WE DO</text>
+  </svg>
+</template>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 900 }
+}">
+class Component extends DCLogic {
+  state = { active: 0, hovered: null };
+
+  componentDidMount() {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = (i * 100) + 'ms';
+      io.observe(el);
+    });
+    this._io = io;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.active !== this.state.active) {
+      const panel = document.getElementById('svc-panel');
+      if (panel) {
+        panel.style.animation = 'none';
+        void panel.offsetHeight; // force reflow
+        panel.style.animation = 'panelIn 0.55s cubic-bezier(0.22,1,0.36,1) forwards';
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+  }
+
+  renderVals() {
+    const SERVICES = [
+      {
+        num: '01', name: 'ARCHITECTURE',
+        tag: 'From masterplan to permit',
+        desc: 'Every drawing produced in-house — site analysis, concept design, working drawings, structural coordination, and approvals. One architect from first sketch to final handover.',
+        stat: '10+', statLabel: 'Years of practice',
+        accent: 'rgba(107,29,13,0.55)',
+      },
+      {
+        num: '02', name: 'INTERIOR DESIGN',
+        tag: 'Spaces that feel considered',
+        desc: 'Material boards, 3D visualisations, FF&E schedules and on-site supervision. Interiors that are liveable, beautiful and built to last — no decorator markup.',
+        stat: '200+', statLabel: 'Interiors delivered',
+        accent: 'rgba(62,21,8,0.55)',
+      },
+      {
+        num: '03', name: 'CONSTRUCTION',
+        tag: 'On-site, every single day',
+        desc: 'Experienced engineers on site daily. Quality audits at every milestone. We own the build from excavation to finishing — no sub-contracting the supervision.',
+        stat: '100%', statLabel: 'Supervised in-house',
+        accent: 'rgba(140,39,18,0.55)',
+      },
+      {
+        num: '04', name: 'LANDSCAPE',
+        tag: 'The ground floor of experience',
+        desc: 'Gardens, terraces, water features and outdoor living. Landscape is designed from day one alongside the building — not added as an afterthought.',
+        stat: '50+', statLabel: 'Outdoor spaces',
+        accent: 'rgba(90,26,8,0.5)',
+      },
+      {
+        num: '05', name: 'RENOVATION',
+        tag: 'Breathing life into existing spaces',
+        desc: 'Full gut or selective refresh — we scope, plan and execute with minimal disruption to your life. The same integrated team, the same single point of contact.',
+        stat: '6–8', statLabel: 'Weeks avg. turnaround',
+        accent: 'rgba(122,32,16,0.5)',
+      },
+    ];
+
+    const { active, hovered } = this.state;
+
+    return {
+      services: SERVICES.map((s, i) => {
+        const isActive = i === active;
+        const isHov = hovered === i;
+        return {
+          ...s,
+          rowStyle: {
+            opacity: isActive ? 1 : isHov ? 0.48 : 0.19,
+            transition: 'opacity 0.3s cubic-bezier(0.22,1,0.36,1)',
+          },
+          numStyle: {
+            fontSize: '9px', fontWeight: '600',
+            letterSpacing: '3px',
+            color: 'rgba(236,232,223,0.55)',
+            minWidth: '28px', flexShrink: '0',
+          },
+          nameStyle: {
+            fontSize: '48px', fontWeight: '800',
+            letterSpacing: isActive ? '3.5px' : '2px',
+            textTransform: 'uppercase',
+            color: '#ece8df', lineHeight: '1', flex: '1',
+            transition: 'letter-spacing 0.4s cubic-bezier(0.22,1,0.36,1)',
+          },
+          arrowStyle: {
+            opacity: isActive ? 1 : 0,
+            transform: isActive ? 'translateX(0)' : 'translateX(-12px)',
+            transition: 'opacity 0.3s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1)',
+            flexShrink: '0',
+          },
+          onClick: () => this.setState({ active: i }),
+          onEnter: () => this.setState({ hovered: i }),
+          onLeave: () => this.setState({ hovered: null }),
+        };
+      }),
+      active: {
+        ...SERVICES[active],
+        accentBarStyle: {
+          position: 'absolute', bottom: '0', left: '0',
+          width: '100%', height: '3px',
+          background: SERVICES[active].accent,
+        },
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

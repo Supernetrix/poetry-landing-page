@@ -192,7 +192,7 @@ export default function JournalSection({ articles: sanityArticles }: { articles?
   }, [selected]);
 
   return (
-    <div style={{ fontFamily: "'Barlow', Helvetica, sans-serif", color: "#3e1508", background: "#ece8df" }}>
+    <div id="journal" style={{ fontFamily: "'Barlow', Helvetica, sans-serif", color: "#3e1508", background: "#ece8df" }}>
 
       {/* HEADER */}
       <div style={{ padding: "112px 64px 72px", position: "relative", overflow: "hidden", animation: "headerIn 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s both" }}>

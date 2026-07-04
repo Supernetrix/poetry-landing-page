@@ -74,6 +74,8 @@ export default function HeroSection() {
             <a href="#portfolio" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.30s both" }}>PORTFOLIO</a>
             <a href="#certifications" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("certifications")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.38s both" }}>RECOGNITION</a>
             <a href="#about" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("about")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.46s both" }}>ABOUT US</a>
+            <a href="#journal" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("journal")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.54s both" }}>JOURNAL</a>
+            <a href="#careers" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("careers")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.62s both" }}>CAREERS</a>
           </div>
         )}
 
@@ -205,7 +207,7 @@ export default function HeroSection() {
             paddingBottom: isMobile ? "28px" : "48px",
           }}
         >
-          <button className="btn-primary" style={{ animation: "slideUp 0.7s cubic-bezier(0.22,1,0.36,1) 1.20s both" }}>
+          <button className="btn-primary" style={{ animation: "slideUp 0.7s cubic-bezier(0.22,1,0.36,1) 1.20s both" }} onClick={() => document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" })}>
             VIEW PORTFOLIO
           </button>
           <button className="btn-ghost" style={{ animation: "slideUp 0.7s cubic-bezier(0.22,1,0.36,1) 1.35s both" }}>

@@ -142,7 +142,7 @@ export default function CareersSection({ roles: sanityJobs }: { roles?: SanityJo
   }, []);
 
   return (
-    <div ref={rootRef} style={{ fontFamily: "'Barlow', Helvetica, sans-serif", color: "#3e1508" }}>
+    <div id="careers" ref={rootRef} style={{ fontFamily: "'Barlow', Helvetica, sans-serif", color: "#3e1508" }}>
 
       {/* DARK HERO */}
       <div style={{ background: "#3e1508", position: "relative", overflow: "hidden", padding: "120px 64px 110px" }}>

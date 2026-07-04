@@ -8,24 +8,33 @@ interface Role {
   location: string;
   type: string;
   desc: string;
-  req0: string;
-  req1: string;
-  req2: string;
-  req3: string;
+  requirements: string[];
   offer: string;
 }
 
-const ROLES: Role[] = [
+interface SanityJob {
+  _id: string;
+  title?: string;
+  location?: string;
+  type?: string;
+  desc?: string;
+  requirements?: string[];
+  offer?: string;
+}
+
+const FALLBACK_ROLES: Role[] = [
   {
     num: "01",
     title: "SENIOR ARCHITECT",
     location: "Bangalore",
     type: "Full-time",
     desc: "Lead the design and technical development of residential and commercial projects from concept to construction documentation. You will work directly with clients, engineers and contractors to deliver buildings that are considered, buildable and lasting.",
-    req0: "7+ years post-qualification experience",
-    req1: "Strong command of AutoCAD, Revit or ArchiCAD",
-    req2: "Experience with BBMP and BDA approval processes",
-    req3: "A portfolio that demonstrates rigour and craft",
+    requirements: [
+      "7+ years post-qualification experience",
+      "Strong command of AutoCAD, Revit or ArchiCAD",
+      "Experience with BBMP and BDA approval processes",
+      "A portfolio that demonstrates rigour and craft",
+    ],
     offer: "₹18–28 LPA · Health cover · Flexible hours",
   },
   {
@@ -34,10 +43,12 @@ const ROLES: Role[] = [
     location: "Bangalore",
     type: "Full-time",
     desc: "Design residential interiors from material boards to construction details. You will collaborate with the architecture team to create spaces that are cohesive, liveable and built with intention.",
-    req0: "3–6 years residential interior design experience",
-    req1: "Proficiency in AutoCAD and 3D rendering (SketchUp / 3ds Max / Enscape)",
-    req2: "Strong eye for materials, finishes and furniture",
-    req3: "Excellent client communication skills",
+    requirements: [
+      "3–6 years residential interior design experience",
+      "Proficiency in AutoCAD and 3D rendering (SketchUp / 3ds Max / Enscape)",
+      "Strong eye for materials, finishes and furniture",
+      "Excellent client communication skills",
+    ],
     offer: "₹10–18 LPA · Health cover · Annual review",
   },
   {
@@ -46,10 +57,12 @@ const ROLES: Role[] = [
     location: "Bangalore",
     type: "Full-time",
     desc: "Oversee construction quality on active sites — daily supervision, quality checks, contractor coordination and regular reporting to the project architect. You are the firm's eyes and hands on the ground.",
-    req0: "BE / B.Tech in Civil Engineering",
-    req1: "3+ years residential or mixed-use construction",
-    req2: "Working knowledge of RCC, brickwork and finishing standards",
-    req3: "Site reporting and documentation proficiency",
+    requirements: [
+      "BE / B.Tech in Civil Engineering",
+      "3+ years residential or mixed-use construction",
+      "Working knowledge of RCC, brickwork and finishing standards",
+      "Site reporting and documentation proficiency",
+    ],
     offer: "₹8–14 LPA · Site allowances · Growth path",
   },
   {
@@ -58,10 +71,12 @@ const ROLES: Role[] = [
     location: "Bangalore",
     type: "Full-time",
     desc: "The operational backbone of each project — managing timelines, client communication, vendor schedules and documentation. You keep the practice moving so the designers can focus on design.",
-    req0: "2–4 years project management or similar role",
-    req1: "Excellent written and verbal communication",
-    req2: "Proficiency in project tracking tools",
-    req3: "Architecture or engineering background preferred",
+    requirements: [
+      "2–4 years project management or similar role",
+      "Excellent written and verbal communication",
+      "Proficiency in project tracking tools",
+      "Architecture or engineering background preferred",
+    ],
     offer: "₹6–10 LPA · Performance bonus · Mentorship",
   },
   {
@@ -70,15 +85,34 @@ const ROLES: Role[] = [
     location: "Remote",
     type: "Contract",
     desc: "Produce photorealistic renders and walkthroughs for client presentations and marketing. You will work closely with both the architecture and interior teams, translating design intent into compelling imagery.",
-    req0: "3+ years architectural visualisation",
-    req1: "Expert in 3ds Max, Corona Renderer or V-Ray",
-    req2: "Strong sense of light, material and composition",
-    req3: "Fast turnaround on revision cycles",
+    requirements: [
+      "3+ years architectural visualisation",
+      "Expert in 3ds Max, Corona Renderer or V-Ray",
+      "Strong sense of light, material and composition",
+      "Fast turnaround on revision cycles",
+    ],
     offer: "Project-based · Competitive day rate",
   },
 ];
 
-export default function CareersSection() {
+function mergeRoles(sanityJobs: SanityJob[]): Role[] {
+  return sanityJobs.map((j, i) => ({
+    num: String(i + 1).padStart(2, "0"),
+    title: j.title ?? "",
+    location: j.location ?? "",
+    type: j.type ?? "",
+    desc: j.desc ?? "",
+    requirements: j.requirements ?? [],
+    offer: j.offer ?? "",
+  }));
+}
+
+export default function CareersSection({ roles: sanityJobs }: { roles?: SanityJob[] }) {
+  const ROLES: Role[] =
+    sanityJobs && sanityJobs.length > 0
+      ? mergeRoles(sanityJobs)
+      : FALLBACK_ROLES;
+
   const rootRef = useRef<HTMLDivElement>(null);
   const [openRole, setOpenRole] = useState<string | null>(null);
 
@@ -188,7 +222,7 @@ export default function CareersSection() {
                     <p style={{ fontSize: "14px", fontWeight: 300, lineHeight: 1.88, opacity: 0.68, marginBottom: "32px" }}>{role.desc}</p>
                     <div style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "4px", textTransform: "uppercase", opacity: 0.34, marginBottom: "18px" }}>WHAT WE&apos;RE LOOKING FOR</div>
                     <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                      {[role.req0, role.req1, role.req2, role.req3].map((req, i) => (
+                      {role.requirements.map((req, i) => (
                         <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
                           <div style={{ width: "4px", height: "4px", background: "#6b1d0d", transform: "rotate(45deg)", flexShrink: 0, marginTop: "8px" }} />
                           <span style={{ fontSize: "13px", fontWeight: 300, lineHeight: 1.6, color: "rgba(62,21,8,0.72)" }}>{req}</span>

@@ -1,6 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { urlFor } from "@/sanity/lib/image";
+import type { SanityImageSource } from "@sanity/image-url";
+
+interface SanityArticle {
+  _id: string;
+  title?: string;
+  category?: string;
+  date?: string;
+  excerpt?: string;
+  tileType?: "image" | "type-dark" | "type-medium";
+  image?: SanityImageSource;
+  body?: string[];
+}
+
+const ARTICLE_LAYOUT = [
+  { idx: "01", color: "#b0a898", gridColumn: "1/2", gridRow: "1/3" },
+  { idx: "02", color: "#3e1508", gridColumn: "2/4", gridRow: "1/2" },
+  { idx: "03", color: "#c4bdb3", gridColumn: "2/3", gridRow: "2/3" },
+  { idx: "04", color: "#d0c9be", gridColumn: "3/4", gridRow: "2/3" },
+  { idx: "05", color: "#9a9288", gridColumn: "1/3", gridRow: "3/4" },
+  { idx: "06", color: "#3e1508", gridColumn: "3/4", gridRow: "3/4" },
+];
 
 interface Article {
   idx: string;
@@ -17,7 +39,7 @@ interface Article {
   body: string[];
 }
 
-const ARTICLES: Article[] = [
+const FALLBACK_ARTICLES: Article[] = [
   {
     idx: "01",
     title: "The Case for Restraint in Modern Indian Homes",
@@ -120,7 +142,28 @@ const ARTICLES: Article[] = [
 
 const CATEGORIES = ["ALL", "ARCHITECTURE", "INTERIOR", "CONSTRUCTION", "LANDSCAPE", "PROCESS"];
 
-export default function JournalSection() {
+function mergeArticles(sanityArticles: SanityArticle[]): Article[] {
+  return sanityArticles.slice(0, 6).map((a, i) => {
+    const layout = ARTICLE_LAYOUT[i] ?? ARTICLE_LAYOUT[0];
+    return {
+      ...layout,
+      title: a.title ?? "",
+      category: a.category ?? "",
+      date: a.date ?? "",
+      excerpt: a.excerpt ?? "",
+      tileType: a.tileType ?? "type-medium",
+      img: a.image ? urlFor(a.image).width(1400).url() : undefined,
+      body: a.body ?? [],
+    };
+  });
+}
+
+export default function JournalSection({ articles: sanityArticles }: { articles?: SanityArticle[] }) {
+  const ARTICLES: Article[] =
+    sanityArticles && sanityArticles.length > 0
+      ? mergeArticles(sanityArticles)
+      : FALLBACK_ARTICLES;
+
   const [selected, setSelected] = useState<Article | null>(null);
   const [category, setCategory] = useState("ALL");
 

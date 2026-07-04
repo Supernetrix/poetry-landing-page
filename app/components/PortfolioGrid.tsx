@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useMobile } from "../hooks/useMobile";
+import { urlFor } from "@/sanity/lib/image";
+import type { SanityImageSource } from "@sanity/image-url";
 
 interface Project {
   idx: string;
@@ -19,7 +21,27 @@ interface Project {
   mobileHeight: string;
 }
 
-const PROJECTS: Project[] = [
+interface SanityProject {
+  _id: string;
+  name: string;
+  location?: string;
+  year?: string;
+  scale?: string;
+  note?: string;
+  image?: SanityImageSource;
+  gallery?: Array<SanityImageSource & { _key: string }>;
+}
+
+const PROJECT_LAYOUT = [
+  { idx: "01", color: "#c5b9aa", gridColumn: "1/3", mobileGridColumn: "1/3", height: "480px", mobileHeight: "280px" },
+  { idx: "02", color: "#b0a898", gridColumn: "3/4", mobileGridColumn: "1/2", height: "480px", mobileHeight: "240px" },
+  { idx: "03", color: "#cec3b5", gridColumn: "1/2", mobileGridColumn: "2/3", height: "340px", mobileHeight: "240px" },
+  { idx: "04", color: "#b8b0a0", gridColumn: "2/3", mobileGridColumn: "1/2", height: "340px", mobileHeight: "200px" },
+  { idx: "05", color: "#a09080", gridColumn: "3/4", mobileGridColumn: "2/3", height: "340px", mobileHeight: "200px" },
+  { idx: "06", color: "#a8a09a", gridColumn: "1/4", mobileGridColumn: "1/3", height: "220px", mobileHeight: "160px" },
+];
+
+const FALLBACK_PROJECTS: Project[] = [
   {
     idx: "01",
     name: "Villa Serrata",
@@ -136,7 +158,28 @@ const PROJECTS: Project[] = [
   },
 ];
 
-export default function PortfolioGrid() {
+function mergeProjects(sanityProjects: SanityProject[]): Project[] {
+  return sanityProjects.slice(0, 6).map((p, i) => {
+    const layout = PROJECT_LAYOUT[i] ?? PROJECT_LAYOUT[0];
+    return {
+      ...layout,
+      name: p.name,
+      location: p.location ?? "",
+      year: p.year ?? "",
+      scale: p.scale ?? "",
+      note: p.note ?? "",
+      img: p.image ? urlFor(p.image).width(1400).url() : "",
+      gallery: p.gallery?.map((g) => urlFor(g).width(900).url()) ?? [],
+    };
+  });
+}
+
+export default function PortfolioGrid({ projects: sanityProjects }: { projects?: SanityProject[] }) {
+  const projects: Project[] =
+    sanityProjects && sanityProjects.length > 0
+      ? mergeProjects(sanityProjects)
+      : FALLBACK_PROJECTS;
+
   const [selected, setSelected] = useState<Project | null>(null);
   const isMobile = useMobile();
 
@@ -174,9 +217,9 @@ export default function PortfolioGrid() {
       id="portfolio"
       style={{
         width: "100%",
-        background: "#ece8df",
+        background: "var(--c-bg)",
         fontFamily: "var(--font-barlow), Helvetica, sans-serif",
-        color: "#3e1508",
+        color: "var(--c-text)",
       }}
     >
       {/* ── SECTION HEADER ───────────────────────── */}
@@ -190,7 +233,7 @@ export default function PortfolioGrid() {
           <div
             style={{
               height: "1px",
-              background: "#3e1508",
+              background: "var(--c-text)",
               opacity: 0.28,
               animation: "lineGrow48 0.55s ease 0.4s both",
             }}
@@ -200,7 +243,7 @@ export default function PortfolioGrid() {
 
         <div style={{ fontSize: isMobile ? "32px" : "56px", fontWeight: 300, letterSpacing: isMobile ? "6px" : "9px", textTransform: "uppercase", lineHeight: 1 }}>PORTFOLIO</div>
         <div style={{ fontSize: "11px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.32, marginTop: "14px" }}>
-          {PROJECTS.length} ESTATES · 2023–2026
+          {projects.length} ESTATES · 2023–2026
         </div>
       </div>
 
@@ -213,7 +256,7 @@ export default function PortfolioGrid() {
           padding: "0 3px 3px",
         }}
       >
-        {PROJECTS.map((p) => (
+        {projects.map((p) => (
           <div
             key={p.idx}
             className="pcard"
@@ -235,12 +278,12 @@ export default function PortfolioGrid() {
             <div className="pcard-dim" />
 
             {/* Index — top left */}
-            <div style={{ position: "absolute", top: "16px", left: "16px", zIndex: 3, fontSize: "10px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(62,21,8,0.26)" }}>
+            <div style={{ position: "absolute", top: "16px", left: "16px", zIndex: 3, fontSize: "10px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(var(--c-text-rgb), 0.26)" }}>
               {p.idx}
             </div>
 
             {/* Year — top right */}
-            <div style={{ position: "absolute", top: "16px", right: "16px", zIndex: 3, fontSize: "10px", fontWeight: 400, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(62,21,8,0.26)" }}>
+            <div style={{ position: "absolute", top: "16px", right: "16px", zIndex: 3, fontSize: "10px", fontWeight: 400, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(var(--c-text-rgb), 0.26)" }}>
               {p.year}
             </div>
 
@@ -260,7 +303,7 @@ export default function PortfolioGrid() {
       {/* ── FOOTER NOTE ──────────────────────────── */}
       <div style={{ padding: isMobile ? `32px ${px} 56px` : `52px ${px} 96px`, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-          <div style={{ width: "32px", height: "1px", background: "#3e1508", opacity: 0.22 }} />
+          <div style={{ width: "32px", height: "1px", background: "var(--c-text)", opacity: 0.22 }} />
           <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.36 }}>POETRY STUDIOS</span>
         </div>
       </div>
@@ -271,7 +314,7 @@ export default function PortfolioGrid() {
           style={{
             position: "fixed",
             inset: 0,
-            background: "#ece8df",
+            background: "var(--c-bg)",
             zIndex: 500,
             overflowY: "auto",
             animation: "detailUp 0.78s cubic-bezier(0.22,1,0.36,1) both",
@@ -297,13 +340,13 @@ export default function PortfolioGrid() {
               fontWeight: 600,
               letterSpacing: "3px",
               textTransform: "uppercase",
-              color: "#3e1508",
+              color: "var(--c-text)",
               padding: 0,
               animation: "justFade 0.4s ease 0.55s both",
               opacity: 0,
             }}
           >
-            <svg width="20" height="8" viewBox="0 0 20 8" fill="none" stroke="#3e1508" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="20" height="8" viewBox="0 0 20 8" fill="none" stroke="var(--c-text)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
               <line x1="19" y1="4" x2="1" y2="4" />
               <polyline points="5,1 1,4 5,7" />
             </svg>
@@ -343,7 +386,7 @@ export default function PortfolioGrid() {
             </div>
 
             {/* Bottom gradient */}
-            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: isMobile ? "160px" : "270px", background: "linear-gradient(to bottom, transparent, rgba(20,8,4,0.6))", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: isMobile ? "160px" : "270px", background: "linear-gradient(to bottom, transparent, rgba(var(--c-shadow-rgb), 0.6))", pointerEvents: "none" }} />
 
             {/* Title overlay */}
             <div
@@ -384,7 +427,7 @@ export default function PortfolioGrid() {
               display: "grid",
               gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)",
               gap: isMobile ? "24px" : "0",
-              borderBottom: "1px solid rgba(62,21,8,0.1)",
+              borderBottom: "1px solid rgba(var(--c-text-rgb), 0.1)",
               padding: isMobile ? `32px ${px}` : `52px ${px}`,
               animation: "fadeSlideUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.72s both",
               opacity: 0,
@@ -415,7 +458,7 @@ export default function PortfolioGrid() {
           >
             <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "24px" }}>
               <span style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "4px", textTransform: "uppercase", opacity: 0.36 }}>Architect&apos;s Note</span>
-              <div style={{ height: "1px", width: "32px", background: "#3e1508", opacity: 0.25 }} />
+              <div style={{ height: "1px", width: "32px", background: "var(--c-text)", opacity: 0.25 }} />
             </div>
             <p style={{ fontSize: isMobile ? "16px" : "21px", fontWeight: 300, lineHeight: 1.78, letterSpacing: "0.3px" }}>{selected.note}</p>
           </div>
@@ -432,7 +475,7 @@ export default function PortfolioGrid() {
             }}
           >
             {selected.gallery.map((g, i) => (
-              <div key={i} style={{ height: isMobile ? "180px" : "340px", background: "#b8ac9d", overflow: "hidden" }}>
+              <div key={i} style={{ height: isMobile ? "180px" : "340px", background: "var(--c-gallery-ph)", overflow: "hidden" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={g} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
               </div>
@@ -445,8 +488,8 @@ export default function PortfolioGrid() {
               className="cta-all"
               onClick={() => setSelected(null)}
               style={{
-                background: "#6b1d0d",
-                color: "#fff",
+                background: "var(--c-btn)",
+                color: "var(--c-btn-text)",
                 fontFamily: "var(--font-barlow), Helvetica, sans-serif",
                 fontSize: "10px",
                 fontWeight: 600,

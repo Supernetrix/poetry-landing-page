@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
 const SERVICES = [
   {
     num: "01",
@@ -11,6 +10,11 @@ const SERVICES = [
     stat: "10+",
     statLabel: "Years of practice",
     accent: "rgba(107,29,13,0.55)",
+    img : "/arch final wdwedo.png",
+    imgScale: 1.5,
+
+
+
   },
   {
     num: "02",
@@ -20,6 +24,7 @@ const SERVICES = [
     stat: "200+",
     statLabel: "Interiors delivered",
     accent: "rgba(62,21,8,0.55)",
+    img : "/2.png"
   },
   {
     num: "03",
@@ -29,6 +34,7 @@ const SERVICES = [
     stat: "100%",
     statLabel: "Supervised in-house",
     accent: "rgba(140,39,18,0.55)",
+    img : "/3.png"
   },
   {
     num: "04",
@@ -38,6 +44,8 @@ const SERVICES = [
     stat: "50+",
     statLabel: "Outdoor spaces",
     accent: "rgba(90,26,8,0.5)",
+    img : "/4.png"
+
   },
   {
     num: "05",
@@ -47,6 +55,7 @@ const SERVICES = [
     stat: "6–8",
     statLabel: "Weeks avg. turnaround",
     accent: "rgba(122,32,16,0.5)",
+    img : "/5.png"
   },
 ];
 
@@ -249,18 +258,23 @@ export default function WhatWeDo() {
             <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", color: "rgba(62,21,8,0.36)", maxWidth: 90, lineHeight: 1.65 }}>{svc.statLabel}</span>
           </div>
 
-          {/* Image placeholder */}
-          <div style={{ position: "relative", width: "100%", maxWidth: 360, aspectRatio: "3/2", background: "rgba(62,21,8,0.035)", border: "1px solid rgba(62,21,8,0.1)" }}>
-            <div style={{ position: "absolute", top: 10, left: 10, width: 16, height: 16, borderTop: "1px solid rgba(62,21,8,0.22)", borderLeft: "1px solid rgba(62,21,8,0.22)" }} />
-            <div style={{ position: "absolute", top: 10, right: 10, width: 16, height: 16, borderTop: "1px solid rgba(62,21,8,0.22)", borderRight: "1px solid rgba(62,21,8,0.22)" }} />
-            <div style={{ position: "absolute", bottom: 10, left: 10, width: 16, height: 16, borderBottom: "1px solid rgba(62,21,8,0.22)", borderLeft: "1px solid rgba(62,21,8,0.22)" }} />
-            <div style={{ position: "absolute", bottom: 10, right: 10, width: 16, height: 16, borderBottom: "1px solid rgba(62,21,8,0.22)", borderRight: "1px solid rgba(62,21,8,0.22)" }} />
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", gap: 12, opacity: 0.22 }}>
-              <div style={{ width: 26, height: 26, border: "1.5px solid #3e1508", transform: "rotate(45deg)" }} />
-              <div style={{ fontSize: 8, fontWeight: 600, letterSpacing: 4, textTransform: "uppercase", color: "#3e1508" }}>IMAGE PLACEHOLDER</div>
+          {/* Image */}
+          {svc.img ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={svc.img} alt={svc.name} style={{ width: "100%", maxWidth: 360, display: "block", transform: svc.imgScale ? `scale(${svc.imgScale})` : undefined }} />
+          ) : (
+            <div style={{ position: "relative", width: "100%", maxWidth: 360, aspectRatio: "3/2", background: "rgba(62,21,8,0.035)", border: "1px solid rgba(62,21,8,0.1)" }}>
+              <div style={{ position: "absolute", top: 10, left: 10, width: 16, height: 16, borderTop: "1px solid rgba(62,21,8,0.22)", borderLeft: "1px solid rgba(62,21,8,0.22)" }} />
+              <div style={{ position: "absolute", top: 10, right: 10, width: 16, height: 16, borderTop: "1px solid rgba(62,21,8,0.22)", borderRight: "1px solid rgba(62,21,8,0.22)" }} />
+              <div style={{ position: "absolute", bottom: 10, left: 10, width: 16, height: 16, borderBottom: "1px solid rgba(62,21,8,0.22)", borderLeft: "1px solid rgba(62,21,8,0.22)" }} />
+              <div style={{ position: "absolute", bottom: 10, right: 10, width: 16, height: 16, borderBottom: "1px solid rgba(62,21,8,0.22)", borderRight: "1px solid rgba(62,21,8,0.22)" }} />
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", gap: 12, opacity: 0.22 }}>
+                <div style={{ width: 26, height: 26, border: "1.5px solid #3e1508", transform: "rotate(45deg)" }} />
+                <div style={{ fontSize: 8, fontWeight: 600, letterSpacing: 4, textTransform: "uppercase", color: "#3e1508" }}>IMAGE PLACEHOLDER</div>
+              </div>
+              <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", height: 3, background: svc.accent }} />
             </div>
-            <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", height: 3, background: svc.accent }} />
-          </div>
+          )}
         </div>
       </div>
     </section>

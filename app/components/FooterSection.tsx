@@ -5,10 +5,10 @@ export default function FooterSection() {
     <footer
       style={{
         position: "relative",
-        background: "#3e1508",
+        background: "var(--c-text)",
         overflow: "hidden",
         fontFamily: "'Barlow', Helvetica, sans-serif",
-        color: "#ece8df",
+        color: "var(--c-bg)",
       }}
     >
       {/* Main content */}
@@ -45,8 +45,8 @@ export default function FooterSection() {
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 96 }}>
           <button
             style={{
-              background: "#ece8df",
-              color: "#3e1508",
+              background: "var(--c-bg)",
+              color: "var(--c-text)",
               border: "none",
               padding: "18px 48px",
               fontSize: 10,
@@ -62,7 +62,7 @@ export default function FooterSection() {
         </div>
 
         {/* Divider */}
-        <div style={{ height: 1, background: "rgba(236,232,223,0.1)", marginBottom: 56 }} />
+        <div style={{ height: 1, background: "rgba(var(--c-bg-rgb), 0.1)", marginBottom: 56 }} />
 
         {/* Bottom grid */}
         <div
@@ -102,13 +102,13 @@ export default function FooterSection() {
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               <a
                 href="mailto:hello@poetryconstructions.com"
-                style={{ fontSize: 13, fontWeight: 300, opacity: 0.65, color: "#ece8df", textDecoration: "none", letterSpacing: "0.02em" }}
+                style={{ fontSize: 13, fontWeight: 300, opacity: 0.65, color: "var(--c-bg)", textDecoration: "none", letterSpacing: "0.02em" }}
               >
                 hello@poetryconstructions.com
               </a>
               <a
                 href="tel:+919999999999"
-                style={{ fontSize: 13, fontWeight: 300, opacity: 0.65, color: "#ece8df", textDecoration: "none", letterSpacing: "0.02em" }}
+                style={{ fontSize: 13, fontWeight: 300, opacity: 0.65, color: "var(--c-bg)", textDecoration: "none", letterSpacing: "0.02em" }}
               >
                 +91 99999 99999
               </a>
@@ -125,7 +125,7 @@ export default function FooterSection() {
                 <a
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  style={{ fontSize: 13, fontWeight: 300, opacity: 0.65, color: "#ece8df", textDecoration: "none", letterSpacing: "0.02em" }}
+                  style={{ fontSize: 13, fontWeight: 300, opacity: 0.65, color: "var(--c-bg)", textDecoration: "none", letterSpacing: "0.02em" }}
                 >
                   {item}
                 </a>
@@ -135,7 +135,7 @@ export default function FooterSection() {
         </div>
 
         {/* Copyright bar */}
-        <div style={{ height: 1, background: "rgba(236,232,223,0.08)", margin: "56px 0 32px" }} />
+        <div style={{ height: 1, background: "rgba(var(--c-bg-rgb), 0.08)", margin: "56px 0 32px" }} />
         <div
           style={{
             display: "flex",
@@ -147,7 +147,7 @@ export default function FooterSection() {
             © 2025 Poetry Constructions. All rights reserved.
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <div style={{ width: 8, height: 8, background: "rgba(236,232,223,0.2)", transform: "rotate(45deg)" }} />
+            <div style={{ width: 8, height: 8, background: "rgba(var(--c-bg-rgb), 0.2)", transform: "rotate(45deg)" }} />
             <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.3em", opacity: 0.25, textTransform: "uppercase" }}>
               BANGALORE
             </span>

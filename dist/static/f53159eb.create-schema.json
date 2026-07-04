@@ -1,0 +1,271 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "year",
+        "type": "string"
+      },
+      {
+        "name": "scale",
+        "type": "string"
+      },
+      {
+        "name": "note",
+        "type": "text",
+        "title": "Architect's Note"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Hero Image"
+      },
+      {
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "gallery",
+        "type": "array"
+      },
+      {
+        "description": "1 = first in grid",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "project",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            "ARCHITECTURE",
+            "INTERIOR",
+            "CONSTRUCTION",
+            "LANDSCAPE",
+            "PROCESS"
+          ]
+        },
+        "name": "category",
+        "type": "string"
+      },
+      {
+        "description": "e.g. \"April 2026\"",
+        "name": "date",
+        "type": "string"
+      },
+      {
+        "name": "excerpt",
+        "type": "text"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Image tile",
+              "value": "image"
+            },
+            {
+              "title": "Type — Dark background",
+              "value": "type-dark"
+            },
+            {
+              "title": "Type — Medium background",
+              "value": "type-medium"
+            }
+          ],
+          "layout": "radio"
+        },
+        "name": "tileType",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Cover Image"
+      },
+      {
+        "description": "One entry per paragraph",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "body",
+        "type": "array"
+      },
+      {
+        "description": "1 = top-left tile",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "article",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "description": "e.g. Full-time, Contract",
+        "name": "type",
+        "type": "string",
+        "title": "Employment Type"
+      },
+      {
+        "name": "desc",
+        "type": "text",
+        "title": "Description"
+      },
+      {
+        "description": "One requirement per entry (max 4 shown)",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "requirements",
+        "type": "array"
+      },
+      {
+        "name": "offer",
+        "type": "text",
+        "title": "Compensation / What We Offer"
+      },
+      {
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "jobOpening",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "description": "Short description shown below the name",
+        "name": "subtitle",
+        "type": "text"
+      },
+      {
+        "name": "year",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Certificate",
+              "value": "CERTIFICATE"
+            },
+            {
+              "title": "Editorial Feature",
+              "value": "EDITORIAL FEATURE"
+            }
+          ],
+          "layout": "radio"
+        },
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Certificate Image"
+      },
+      {
+        "description": "1–4, controls grid position",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "certificate",
+    "type": "document"
+  }
+]

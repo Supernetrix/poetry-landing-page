@@ -251,7 +251,6 @@ export default function CareersSection({ roles: sanityJobs }: { roles?: SanityJo
 
       {/* STUDIO VALUES */}
       <div style={{ background: "#3e1508", padding: "100px 64px", position: "relative", overflow: "hidden" }}>
-        <div aria-hidden="true" style={{ position: "absolute", right: "-0.04em", top: "50%", transform: "translateY(-50%)", fontSize: "20vw", fontWeight: 800, color: "rgba(236,232,223,0.035)", lineHeight: 0.85, pointerEvents: "none", userSelect: "none", whiteSpace: "nowrap" }}>CULTURE</div>
 
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "52px", position: "relative", zIndex: 1 }}>
           <div style={{ width: "32px", height: "1px", background: "rgba(236,232,223,0.18)" }} />

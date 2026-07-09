@@ -1,6 +1,12 @@
 "use client";
 
+import { useMobile } from "../hooks/useMobile";
+
 export default function FooterSection() {
+  const isMobile = useMobile();
+  const px = isMobile ? "24px" : "64px";
+  const pt = isMobile ? "64px" : "120px";
+
   return (
     <footer
       style={{
@@ -12,13 +18,13 @@ export default function FooterSection() {
       }}
     >
       {/* Main content */}
-      <div style={{ position: "relative", zIndex: 1, padding: "120px 64px 64px" }}>
+      <div style={{ position: "relative", zIndex: 1, padding: `${pt} ${px} ${isMobile ? "48px" : "64px"}` }}>
 
         {/* Headline */}
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
+        <div style={{ textAlign: "center", marginBottom: isMobile ? 36 : 56 }}>
           <div
             style={{
-              fontSize: "clamp(36px, 6vw, 72px)",
+              fontSize: isMobile ? "clamp(32px, 10vw, 48px)" : "clamp(36px, 6vw, 72px)",
               fontWeight: 300,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
@@ -30,7 +36,7 @@ export default function FooterSection() {
           </div>
           <div
             style={{
-              fontSize: "clamp(36px, 6vw, 72px)",
+              fontSize: isMobile ? "clamp(32px, 10vw, 48px)" : "clamp(36px, 6vw, 72px)",
               fontWeight: 800,
               letterSpacing: "0.1em",
               textTransform: "uppercase",
@@ -42,7 +48,7 @@ export default function FooterSection() {
         </div>
 
         {/* CTA button */}
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: 96 }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: isMobile ? 56 : 96 }}>
           <button
             style={{
               background: "var(--c-bg)",
@@ -62,14 +68,14 @@ export default function FooterSection() {
         </div>
 
         {/* Divider */}
-        <div style={{ height: 1, background: "rgba(var(--c-bg-rgb), 0.1)", marginBottom: 56 }} />
+        <div style={{ height: 1, background: "rgba(var(--c-bg-rgb), 0.1)", marginBottom: isMobile ? 40 : 56 }} />
 
         {/* Bottom grid */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            gap: 40,
+            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr",
+            gap: isMobile ? 36 : 40,
             alignItems: "start",
           }}
         >
@@ -135,12 +141,14 @@ export default function FooterSection() {
         </div>
 
         {/* Copyright bar */}
-        <div style={{ height: 1, background: "rgba(var(--c-bg-rgb), 0.08)", margin: "56px 0 32px" }} />
+        <div style={{ height: 1, background: "rgba(var(--c-bg-rgb), 0.08)", margin: `${isMobile ? "40px" : "56px"} 0 32px` }} />
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "12px",
           }}
         >
           <span style={{ fontSize: 10, fontWeight: 400, letterSpacing: "0.2em", opacity: 0.3, textTransform: "uppercase" }}>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useMobile } from "../hooks/useMobile";
 import { urlFor } from "@/sanity/lib/image";
 import type { SanityImageSource } from "@sanity/image-url";
 
@@ -166,6 +167,7 @@ export default function JournalSection({ articles: sanityArticles }: { articles?
 
   const [selected, setSelected] = useState<Article | null>(null);
   const [category, setCategory] = useState("ALL");
+  const isMobile = useMobile();
 
   useEffect(() => {
     const cardIo = new IntersectionObserver(
@@ -195,7 +197,7 @@ export default function JournalSection({ articles: sanityArticles }: { articles?
     <div id="journal" style={{ fontFamily: "'Barlow', Helvetica, sans-serif", color: "#3e1508", background: "#ece8df" }}>
 
       {/* HEADER */}
-      <div style={{ padding: "112px 64px 72px", position: "relative", overflow: "hidden", animation: "headerIn 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s both" }}>
+      <div style={{ padding: isMobile ? "60px 24px 32px" : "112px 64px 72px", position: "relative", overflow: "hidden", animation: "headerIn 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s both" }}>
         <div aria-hidden="true" style={{ position: "absolute", right: "-0.05em", top: "50%", transform: "translateY(-50%)", fontSize: "20vw", fontWeight: 800, letterSpacing: "-0.02em", color: "rgba(62,21,8,0.04)", lineHeight: 0.85, pointerEvents: "none", userSelect: "none", whiteSpace: "nowrap" }}>JOURNAL</div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "28px", position: "relative", zIndex: 1 }}>
@@ -203,16 +205,27 @@ export default function JournalSection({ articles: sanityArticles }: { articles?
           <span style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "4px", textTransform: "uppercase", opacity: 0.48 }}>THE POETRY JOURNAL</span>
         </div>
 
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", position: "relative", zIndex: 1 }}>
-          <div>
-            <div style={{ fontSize: "56px", fontWeight: 300, letterSpacing: "9px", textTransform: "uppercase", lineHeight: 1 }}>ESSAYS &amp; THINKING</div>
-            <div style={{ fontSize: "11px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.3, marginTop: "14px" }}>{ARTICLES.length} ARTICLES · 2025–2026</div>
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <div style={{ marginBottom: isMobile ? "24px" : "0", display: isMobile ? "block" : "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+            <div>
+              <div style={{ fontSize: isMobile ? "30px" : "56px", fontWeight: 300, letterSpacing: isMobile ? "4px" : "9px", textTransform: "uppercase", lineHeight: 1 }}>ESSAYS &amp; THINKING</div>
+              <div style={{ fontSize: "11px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.3, marginTop: "14px" }}>{ARTICLES.length} ARTICLES · 2025–2026</div>
+            </div>
+            {!isMobile && (
+              <div style={{ display: "flex", gap: "28px", alignItems: "center", paddingBottom: "4px" }}>
+                {CATEGORIES.map((cat) => (
+                  <button key={cat} className={cat === category ? "cat-btn cat-btn-active" : "cat-btn"} onClick={() => setCategory(cat)}>{cat}</button>
+                ))}
+              </div>
+            )}
           </div>
-          <div style={{ display: "flex", gap: "28px", alignItems: "center", paddingBottom: "4px" }}>
-            {CATEGORIES.map((cat) => (
-              <button key={cat} className={cat === category ? "cat-btn cat-btn-active" : "cat-btn"} onClick={() => setCategory(cat)}>{cat}</button>
-            ))}
-          </div>
+          {isMobile && (
+            <div style={{ display: "flex", gap: "10px", overflowX: "auto", paddingBottom: "4px", scrollbarWidth: "none" }}>
+              {CATEGORIES.map((cat) => (
+                <button key={cat} className={cat === category ? "cat-btn cat-btn-active" : "cat-btn"} onClick={() => setCategory(cat)} style={{ flexShrink: 0 }}>{cat}</button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -247,15 +260,15 @@ export default function JournalSection({ articles: sanityArticles }: { articles?
                 <>
                   <div className="acard-scale" style={{ position: "absolute", inset: 0, backgroundImage: `url(${art.img})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                   <div className="acard-dim" />
-                  <div style={{ position: "absolute", top: "24px", left: "28px", zIndex: 3, fontSize: "10px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(236,232,223,0.42)" }}>{art.idx}</div>
-                  <div style={{ position: "absolute", top: "24px", right: "28px", zIndex: 3, fontSize: "10px", fontWeight: 400, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(236,232,223,0.36)" }}>{art.date}</div>
-                  <div className="acard-info">
-                    <div style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "3px", color: "rgba(255,255,255,0.52)", textTransform: "uppercase", marginBottom: "9px" }}>{art.category}</div>
-                    <div style={{ fontSize: "24px", fontWeight: 300, letterSpacing: "2px", color: "#fff", textTransform: "uppercase", lineHeight: 1.2, marginBottom: "11px" }}>{art.title}</div>
-                    <div style={{ fontSize: "12px", fontWeight: 300, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: "16px", maxWidth: "360px" }}>{art.excerpt}</div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                      <div style={{ width: "20px", height: "1px", background: "rgba(255,255,255,0.38)" }} />
-                      <span style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "3px", color: "rgba(255,255,255,0.52)", textTransform: "uppercase" }}>READ ARTICLE</span>
+                  <div style={{ position: "absolute", top: "14px", left: "16px", zIndex: 3, fontSize: "10px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(236,232,223,0.42)" }}>{art.idx}</div>
+                  <div style={{ position: "absolute", top: "14px", right: "16px", zIndex: 3, fontSize: "10px", fontWeight: 400, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(236,232,223,0.36)" }}>{art.date}</div>
+                  <div className="acard-info" style={{ padding: isMobile ? "14px 16px" : undefined }}>
+                    <div style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "3px", color: "rgba(255,255,255,0.52)", textTransform: "uppercase", marginBottom: "6px" }}>{art.category}</div>
+                    <div style={{ fontSize: isMobile ? "14px" : "24px", fontWeight: 300, letterSpacing: "2px", color: "#fff", textTransform: "uppercase", lineHeight: 1.2, marginBottom: isMobile ? "8px" : "11px" }}>{art.title}</div>
+                    {!isMobile && <div style={{ fontSize: "12px", fontWeight: 300, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: "16px", maxWidth: "360px" }}>{art.excerpt}</div>}
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                      <div style={{ width: "16px", height: "1px", background: "rgba(255,255,255,0.38)" }} />
+                      <span style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "3px", color: "rgba(255,255,255,0.52)", textTransform: "uppercase" }}>READ</span>
                     </div>
                   </div>
                 </>
@@ -268,21 +281,21 @@ export default function JournalSection({ articles: sanityArticles }: { articles?
                   display: "flex", flexDirection: "column",
                   justifyContent: isStrip ? "center" : "space-between",
                   gap: isStrip ? "10px" : undefined,
-                  padding: isStrip ? "28px 48px" : "32px 36px",
+                  padding: isMobile ? "16px 18px" : isStrip ? "28px 48px" : "32px 36px",
                 }}>
-                  <div style={{ position: "absolute", top: "20px", left: "20px", width: "18px", height: "18px", borderTop: `1px solid rgba(${fg},0.14)`, borderLeft: `1px solid rgba(${fg},0.14)`, pointerEvents: "none" }} />
-                  <div style={{ position: "absolute", bottom: "20px", right: "20px", width: "18px", height: "18px", borderBottom: `1px solid rgba(${fg},0.14)`, borderRight: `1px solid rgba(${fg},0.14)`, pointerEvents: "none" }} />
+                  <div style={{ position: "absolute", top: "14px", left: "14px", width: "14px", height: "14px", borderTop: `1px solid rgba(${fg},0.14)`, borderLeft: `1px solid rgba(${fg},0.14)`, pointerEvents: "none" }} />
+                  <div style={{ position: "absolute", bottom: "14px", right: "14px", width: "14px", height: "14px", borderBottom: `1px solid rgba(${fg},0.14)`, borderRight: `1px solid rgba(${fg},0.14)`, pointerEvents: "none" }} />
                   <div aria-hidden="true" style={{ position: "absolute", right: "-0.04em", bottom: "-0.06em", fontSize: isStrip ? "9vw" : "13vw", fontWeight: 800, color: `rgba(${fg},0.04)`, lineHeight: 0.85, pointerEvents: "none", userSelect: "none", zIndex: 1, whiteSpace: "nowrap" }}>{art.idx}</div>
                   <div style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "4.5px", textTransform: "uppercase", color: `rgba(${fg},0.3)`, position: "relative", zIndex: 2 }}>{art.category}</div>
                   <div style={{ position: "relative", zIndex: 2, flex: isStrip ? undefined : "1", display: "flex", flexDirection: "column", justifyContent: isStrip ? undefined : "flex-end" }}>
-                    <div style={{ fontSize: isStrip ? "20px" : "26px", fontWeight: 300, letterSpacing: "3px", textTransform: "uppercase", color: fgSolid, lineHeight: 1.1, marginBottom: isStrip ? "0" : "12px" }}>{art.title}</div>
-                    {!isStrip && <p style={{ fontSize: "12px", fontWeight: 300, lineHeight: 1.78, color: `rgba(${fg},0.5)` }}>{art.excerpt}</p>}
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "18px" }}>
-                      <div style={{ width: "16px", height: "1px", background: `rgba(${fg},0.28)` }} />
-                      <span style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: `rgba(${fg},0.44)` }}>READ ARTICLE</span>
+                    <div style={{ fontSize: isMobile ? "13px" : isStrip ? "20px" : "26px", fontWeight: 300, letterSpacing: isMobile ? "1px" : "3px", textTransform: "uppercase", color: fgSolid, lineHeight: 1.2, marginBottom: isStrip ? "0" : "10px" }}>{art.title}</div>
+                    {!isStrip && !isMobile && <p style={{ fontSize: "12px", fontWeight: 300, lineHeight: 1.78, color: `rgba(${fg},0.5)` }}>{art.excerpt}</p>}
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: isMobile ? "10px" : "18px" }}>
+                      <div style={{ width: "14px", height: "1px", background: `rgba(${fg},0.28)` }} />
+                      <span style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: `rgba(${fg},0.44)` }}>READ</span>
                     </div>
                   </div>
-                  {!isStrip && <div style={{ fontSize: "9px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", color: `rgba(${fg},0.26)`, position: "relative", zIndex: 2 }}>{art.date}</div>}
+                  {!isStrip && !isMobile && <div style={{ fontSize: "9px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", color: `rgba(${fg},0.26)`, position: "relative", zIndex: 2 }}>{art.date}</div>}
                 </div>
               )}
             </div>
@@ -291,7 +304,7 @@ export default function JournalSection({ articles: sanityArticles }: { articles?
       </div>
 
       {/* FOOTER NOTE */}
-      <div style={{ padding: "52px 64px 96px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ padding: isMobile ? "32px 24px 56px" : "52px 64px 96px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <span style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.28 }}>Writing on architecture, craft and making</span>
         <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
           <div style={{ width: "32px", height: "1px", background: "#3e1508", opacity: 0.2 }} />

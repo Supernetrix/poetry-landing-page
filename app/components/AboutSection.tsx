@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useMobile } from "../hooks/useMobile";
 import { urlFor } from "@/sanity/lib/image";
 import type { SanityImageSource } from "@sanity/image-url";
 
@@ -107,6 +108,7 @@ export default function AboutSection({ certificates: sanityCerts }: { certificat
     sanityCerts && sanityCerts.length > 0 ? mergeCerts(sanityCerts) : FALLBACK_CERTS;
   const rootRef = useRef<HTMLDivElement>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const isMobile = useMobile();
 
   useEffect(() => {
     const root = rootRef.current;
@@ -153,11 +155,11 @@ export default function AboutSection({ certificates: sanityCerts }: { certificat
           <div style={{ fontSize: 11, fontWeight: 400, letterSpacing: 3, textTransform: "uppercase", opacity: 0.32, marginTop: 18 }}>CERTIFICATIONS · AWARDS · FEATURES</div>
         </div>
 
-        <div className="reveal cert-wall" style={{ display: "grid", gridTemplateColumns: "38% 1fr", gap: 36, position: "relative", zIndex: 1, height: "880px" }}>
+        <div className="reveal cert-wall" style={{ display: "grid", gridTemplateColumns: "38% 1fr", gap: 36, position: "relative", zIndex: 1, height: isMobile ? "auto" : "880px" }}>
           {(["left", "right"] as const).map((col, colIdx) => (
-            <div key={col} className={col === "right" ? "cert-right-col" : ""} style={{ display: "flex", flexDirection: "column", gap: 36, height: "100%" }}>
+            <div key={col} className={col === "right" ? "cert-right-col" : ""} style={{ display: "flex", flexDirection: "column", gap: 36, height: isMobile ? "auto" : "100%" }}>
               {certs.filter(c => c.col === col).map((cert, i) => (
-                <div key={colIdx * 2 + i} className="cert-frame" style={{ flex: cert.flex, display: "flex", flexDirection: "column", transform: `rotate(${cert.rotate})` }}>
+                <div key={colIdx * 2 + i} className="cert-frame" style={{ flex: isMobile ? "none" : cert.flex, display: "flex", flexDirection: "column", transform: `rotate(${cert.rotate})` }}>
                   <div style={{ flex: 1, minHeight: 0, background: "var(--c-cert-inner)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     {cert.img
                       ? <img src={cert.img} alt={cert.name} style={{ width: "100%", height: "100%", objectFit: "cover", padding: 10 }} />
@@ -211,17 +213,17 @@ export default function AboutSection({ certificates: sanityCerts }: { certificat
             <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.84, letterSpacing: 0.2, marginBottom: 44, opacity: 0.82 }}>
               Founded in 2020, Poetry replaces the chaos of managing multiple vendors with a single integrated design-and-build solution. One team, one architect, one point of contact — from brief to handover. Over 20 years of combined experience, delivered under one roof at a contractor&apos;s price.
             </p>
-            <div className="three-col" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", borderTop: "1px solid rgba(var(--c-text-rgb), 0.1)" }}>
-              <div style={{ padding: "24px 28px 24px 0", borderRight: "1px solid rgba(var(--c-text-rgb), 0.1)" }}>
-                <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1 }}>50+</div>
+            <div style={{ display: "flex", flexDirection: "row", borderTop: "1px solid rgba(var(--c-text-rgb), 0.1)" }}>
+              <div style={{ flex: 1, padding: isMobile ? "16px 12px 16px 0" : "24px 28px 24px 0", borderRight: "1px solid rgba(var(--c-text-rgb), 0.1)" }}>
+                <div style={{ fontSize: isMobile ? 24 : 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1 }}>50+</div>
                 <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginTop: 8, lineHeight: 1.5 }}>Total<br />Projects</div>
               </div>
-              <div style={{ padding: "24px 28px", borderRight: "1px solid rgba(var(--c-text-rgb), 0.1)" }}>
-                <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1 }}>25+</div>
+              <div style={{ flex: 1, padding: isMobile ? "16px 12px" : "24px 28px", borderRight: "1px solid rgba(var(--c-text-rgb), 0.1)" }}>
+                <div style={{ fontSize: isMobile ? 24 : 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1 }}>25+</div>
                 <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginTop: 8, lineHeight: 1.5 }}>Ongoing<br />Projects</div>
               </div>
-              <div style={{ padding: "24px 0 24px 28px", background: "var(--c-text)" }}>
-                <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1, color: "var(--c-bg)" }}>14+</div>
+              <div style={{ flex: 1, padding: isMobile ? "16px 0 16px 12px" : "24px 0 24px 28px", background: "var(--c-text)" }}>
+                <div style={{ fontSize: isMobile ? 24 : 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1, color: "var(--c-bg)" }}>14+</div>
                 <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", color: "rgba(var(--c-bg-rgb), 0.55)", marginTop: 8, lineHeight: 1.5 }}>Completed<br />Projects</div>
               </div>
             </div>
@@ -229,51 +231,81 @@ export default function AboutSection({ certificates: sanityCerts }: { certificat
         </div>
 
         {/* Founder cards */}
-        <div className="reveal two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 3, marginBottom: 80, position: "relative", zIndex: 1 }}>
+        <div className="reveal two-col" style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 3, marginBottom: 80, position: "relative", zIndex: 1 }}>
 
-          {/* Prajon: circle left · info right (same layout as Praveen) */}
+          {/* Prajon */}
           <div className="founder-card" style={{ padding: 0, overflow: "hidden" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", alignItems: "center", padding: "40px 40px 32px" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div style={{ width: 200, height: 200, background: "var(--c-btn)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ fontSize: 48, fontWeight: 800, letterSpacing: 1, color: "var(--c-bg)" }}>PN</span>
+            {isMobile ? (
+              <div style={{ padding: "32px 28px 24px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 16 }}>
+                <div style={{ width: 160, height: 160, background: "var(--c-btn)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <span style={{ fontSize: 42, fontWeight: 800, letterSpacing: 1, color: "var(--c-bg)" }}>PN</span>
+                </div>
+                <div>
+                  <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>Prajon Nair</div>
+                  <div style={{ fontSize: 9, fontWeight: 400, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginBottom: 14 }}>Co-Founder · Managing Partner</div>
+                  <div style={{ display: "inline-block", background: "var(--c-text)", padding: "6px 16px" }}>
+                    <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: "var(--c-bg)" }}>LEAD ARCHITECT · 10+ YRS</span>
+                  </div>
                 </div>
               </div>
-              <div>
-                <div style={{ fontSize: 20, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>Prajon Nair</div>
-                <div style={{ fontSize: 9, fontWeight: 400, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginBottom: 18 }}>Co-Founder · Managing Partner</div>
-                <div style={{ display: "inline-block", background: "var(--c-text)", padding: "6px 16px" }}>
-                  <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: "var(--c-bg)" }}>LEAD ARCHITECT · 10+ YRS</span>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", alignItems: "center", padding: "40px 40px 32px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: 200, height: 200, background: "var(--c-btn)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <span style={{ fontSize: 48, fontWeight: 800, letterSpacing: 1, color: "var(--c-bg)" }}>PN</span>
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: 20, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>Prajon Nair</div>
+                  <div style={{ fontSize: 9, fontWeight: 400, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginBottom: 18 }}>Co-Founder · Managing Partner</div>
+                  <div style={{ display: "inline-block", background: "var(--c-text)", padding: "6px 16px" }}>
+                    <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: "var(--c-bg)" }}>LEAD ARCHITECT · 10+ YRS</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div style={{ height: 1, background: "rgba(var(--c-text-rgb), 0.08)", margin: "0 40px" }} />
-            <div style={{ padding: "28px 40px 40px" }}>
-              <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.86, opacity: 0.74 }}>
+            )}
+            <div style={{ height: 1, background: "rgba(var(--c-text-rgb), 0.08)", margin: isMobile ? "0 28px" : "0 40px" }} />
+            <div style={{ padding: isMobile ? "20px 28px 32px" : "28px 40px 40px" }}>
+              <p style={{ fontSize: isMobile ? 13 : 14, fontWeight: 300, lineHeight: 1.86, opacity: 0.74 }}>
                 An architect with over 10 years of experience across residential, commercial and luxury resort projects, Prajon has always been driven to deliver quality and lasting value. His unique ability to translate a client&apos;s vision into built reality makes him one of Bangalore&apos;s most sought-after architects. He leads design and project execution, and serves as Poetry&apos;s chief of design.
               </p>
             </div>
           </div>
 
-          {/* Praveen: circle left · info right */}
+          {/* Praveen */}
           <div className="founder-card" style={{ padding: 0, overflow: "hidden" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", alignItems: "center", padding: "40px 40px 32px" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div style={{ width: 200, height: 200, background: "var(--c-text)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ fontSize: 48, fontWeight: 800, letterSpacing: 1, color: "var(--c-bg)" }}>PN</span>
+            {isMobile ? (
+              <div style={{ padding: "32px 28px 24px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 16 }}>
+                <div style={{ width: 160, height: 160, background: "var(--c-text)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <span style={{ fontSize: 42, fontWeight: 800, letterSpacing: 1, color: "var(--c-bg)" }}>PN</span>
+                </div>
+                <div>
+                  <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>Praveen Nair</div>
+                  <div style={{ fontSize: 9, fontWeight: 400, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginBottom: 14 }}>Co-Founder · Managing Partner</div>
+                  <div style={{ display: "inline-block", background: "var(--c-text)", padding: "6px 16px" }}>
+                    <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: "var(--c-bg)" }}>EX-JLL &amp; COLLIERS · 15+ YRS</span>
+                  </div>
                 </div>
               </div>
-              <div>
-                <div style={{ fontSize: 20, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>Praveen Nair</div>
-                <div style={{ fontSize: 9, fontWeight: 400, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginBottom: 18 }}>Co-Founder · Managing Partner</div>
-                <div style={{ display: "inline-block", background: "var(--c-text)", padding: "6px 16px" }}>
-                  <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: "var(--c-bg)" }}>EX-JLL &amp; COLLIERS · 15+ YRS</span>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", alignItems: "center", padding: "40px 40px 32px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: 200, height: 200, background: "var(--c-text)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <span style={{ fontSize: 48, fontWeight: 800, letterSpacing: 1, color: "var(--c-bg)" }}>PN</span>
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: 20, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>Praveen Nair</div>
+                  <div style={{ fontSize: 9, fontWeight: 400, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginBottom: 18 }}>Co-Founder · Managing Partner</div>
+                  <div style={{ display: "inline-block", background: "var(--c-text)", padding: "6px 16px" }}>
+                    <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: "var(--c-bg)" }}>EX-JLL &amp; COLLIERS · 15+ YRS</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div style={{ height: 1, background: "rgba(var(--c-text-rgb), 0.08)", margin: "0 40px" }} />
-            <div style={{ padding: "28px 40px 40px" }}>
-              <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.86, opacity: 0.74 }}>
+            )}
+            <div style={{ height: 1, background: "rgba(var(--c-text-rgb), 0.08)", margin: isMobile ? "0 28px" : "0 40px" }} />
+            <div style={{ padding: isMobile ? "20px 28px 32px" : "28px 40px 40px" }}>
+              <p style={{ fontSize: isMobile ? 13 : 14, fontWeight: 300, lineHeight: 1.86, opacity: 0.74 }}>
                 With over 15 years in the Indian Real Estate Investment industry, having worked with JLL &amp; Colliers International, Praveen brings vast experience in strategy and operations to Poetry. A master in business management, he understands the gaps in today&apos;s retail construction market. He leads strategy, corporate management, investor relations and brand marketing.
               </p>
             </div>

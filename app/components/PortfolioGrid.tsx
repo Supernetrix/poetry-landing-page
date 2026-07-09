@@ -555,7 +555,7 @@ export default function PortfolioGrid({ projects: sanityProjects }: { projects?:
 
             <div
               onClick={(e) => e.stopPropagation()}
-              style={{ width: isMobile ? "92vw" : "78vw", height: isMobile ? "60vw" : "78vh", background: "var(--c-bg)", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}
+              style={{ width: isMobile ? "92vw" : "78vw", height: isMobile ? "75vh" : "90vh", background: "var(--c-bg)", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}
             >
               <button
                 onClick={() => setLightbox(null)}

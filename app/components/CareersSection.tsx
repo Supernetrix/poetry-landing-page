@@ -154,13 +154,14 @@ export default function CareersSection({ roles: sanityJobs }: { roles?: SanityJo
 
         <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "52px", position: "relative", zIndex: 1, animation: "slideRight 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s both" }}>
           <div style={{ width: "32px", height: "1px", background: "rgba(236,232,223,0.2)" }} />
-          <span style={{ fontSize: "9px", fontWeight: 400, letterSpacing: "4.5px", textTransform: "uppercase", color: "rgba(236,232,223,0.32)" }}>CAREERS</span>
+          <span style={{ fontSize: "9px", fontWeight: 400, letterSpacing: "4.5px", textTransform: "uppercase", color: "rgba(236,232,223,0.32)" }}>JOBS</span>
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "45% 1fr", gap: "80px", alignItems: "end", position: "relative", zIndex: 1 }}>
           <div>
             <div style={{ fontSize: "68px", fontWeight: 300, letterSpacing: "8px", textTransform: "uppercase", lineHeight: 1, color: "#ece8df", marginBottom: "24px", animation: "slideRight 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s both" }}>BUILD<br />WITH US.</div>
             <div style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "4px", textTransform: "uppercase", color: "rgba(236,232,223,0.3)", animation: "justFade 0.6s ease 0.5s both" }}>BANGALORE · {ROLES.length} OPEN ROLES</div>
+
           </div>
           <div style={{ animation: "slideUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.35s both" }}>
             <p style={{ fontSize: "15px", fontWeight: 300, lineHeight: 1.84, letterSpacing: "0.2px", color: "rgba(236,232,223,0.62)", maxWidth: "440px", marginBottom: "44px" }}>We are a small studio that punches above its weight. Every person here owns their work — from first sketch to final handover. We are growing, and we are looking for people who care about craft as much as we do.</p>
@@ -188,12 +189,12 @@ export default function CareersSection({ roles: sanityJobs }: { roles?: SanityJo
       <div style={{ padding: "100px 64px 80px", background: "#ece8df" }}>
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "28px" }}>
           <div style={{ height: "1px", width: "48px", background: "#3e1508", opacity: 0.22 }} />
-          <span style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "4px", textTransform: "uppercase", opacity: 0.46 }}>OPEN POSITIONS</span>
+          <span style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "4px", textTransform: "uppercase", opacity: 0.46 }}>OPEN JOBS</span>
         </div>
         <div className="reveal" style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "64px" }}>
           <div>
-            <div style={{ fontSize: "52px", fontWeight: 300, letterSpacing: "7px", textTransform: "uppercase", lineHeight: 1 }}>CURRENT OPENINGS</div>
-            <div style={{ fontSize: "11px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.3, marginTop: "14px" }}>{ROLES.length} POSITIONS · BANGALORE &amp; REMOTE</div>
+            <div style={{ fontSize: "52px", fontWeight: 300, letterSpacing: "7px", textTransform: "uppercase", lineHeight: 1 }}>CURRENT JOBS</div>
+            <div style={{ fontSize: "11px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.3, marginTop: "14px" }}>{ROLES.length} JOBS · BANGALORE &amp; REMOTE</div>
           </div>
           <span style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.22 }}>CLICK A ROLE TO EXPAND</span>
         </div>
@@ -249,54 +250,36 @@ export default function CareersSection({ roles: sanityJobs }: { roles?: SanityJo
         </div>
       </div>
 
-      {/* STUDIO VALUES */}
-      <div style={{ background: "#3e1508", padding: "100px 64px", position: "relative", overflow: "hidden" }}>
-
-        <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "52px", position: "relative", zIndex: 1 }}>
-          <div style={{ width: "32px", height: "1px", background: "rgba(236,232,223,0.18)" }} />
-          <span style={{ fontSize: "9px", fontWeight: 400, letterSpacing: "4.5px", textTransform: "uppercase", color: "rgba(236,232,223,0.32)" }}>STUDIO LIFE</span>
-        </div>
-        <div className="reveal" style={{ fontSize: "52px", fontWeight: 300, letterSpacing: "7px", textTransform: "uppercase", color: "#ece8df", marginBottom: "72px", position: "relative", zIndex: 1, lineHeight: 1 }}>WHY POETRY</div>
-
-        <div className="reveal" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "3px", position: "relative", zIndex: 1 }}>
-          <div className="value-card" style={{ background: "rgba(236,232,223,0.04)" }}>
-            <div style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(236,232,223,0.28)", marginBottom: "24px" }}>01</div>
-            <div style={{ fontSize: "19px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: "#ece8df", marginBottom: "20px", lineHeight: 1.2 }}>CRAFT FIRST</div>
-            <div style={{ width: "28px", height: "1.5px", background: "rgba(236,232,223,0.18)", marginBottom: "20px" }} />
-            <p style={{ fontSize: "14px", fontWeight: 300, lineHeight: 1.82, color: "rgba(236,232,223,0.56)" }}>We slow down to get things right. Every detail is deliberate. Our people are given the time and trust to do their best work — without compromise.</p>
-          </div>
-          <div className="value-card" style={{ background: "rgba(236,232,223,0.04)" }}>
-            <div style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(236,232,223,0.28)", marginBottom: "24px" }}>02</div>
-            <div style={{ fontSize: "19px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: "#ece8df", marginBottom: "20px", lineHeight: 1.2 }}>ONE TEAM</div>
-            <div style={{ width: "28px", height: "1.5px", background: "rgba(236,232,223,0.18)", marginBottom: "20px" }} />
-            <p style={{ fontSize: "14px", fontWeight: 300, lineHeight: 1.82, color: "rgba(236,232,223,0.56)" }}>Architects, engineers, interior designers and coordinators share one studio. No silos. Decisions are made together and owned together.</p>
-          </div>
-          <div className="value-card" style={{ background: "rgba(236,232,223,0.04)" }}>
-            <div style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(236,232,223,0.28)", marginBottom: "24px" }}>03</div>
-            <div style={{ fontSize: "19px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", color: "#ece8df", marginBottom: "20px", lineHeight: 1.2 }}>REAL GROWTH</div>
-            <div style={{ width: "28px", height: "1.5px", background: "rgba(236,232,223,0.18)", marginBottom: "20px" }} />
-            <p style={{ fontSize: "14px", fontWeight: 300, lineHeight: 1.82, color: "rgba(236,232,223,0.56)" }}>Small enough that your contribution is visible. Growing fast enough that opportunity is constant. We promote from within — always.</p>
-          </div>
-        </div>
-
-        <div className="reveal" style={{ marginTop: "64px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative", zIndex: 1 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div style={{ width: "6px", height: "6px", background: "rgba(236,232,223,0.16)", transform: "rotate(45deg)" }} />
-            <span style={{ fontSize: "9px", fontWeight: 300, letterSpacing: "3.5px", textTransform: "uppercase", color: "rgba(236,232,223,0.2)" }}>ONE TEAM · EVERY DISCIPLINE</span>
-          </div>
-          <span style={{ fontSize: "9px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(236,232,223,0.2)" }}>BANGALORE · EST. 2020</span>
-        </div>
-      </div>
-
       {/* CTA */}
-      <div style={{ padding: "100px 64px 80px", background: "#ece8df", position: "relative", overflow: "hidden" }}>
-        <div aria-hidden="true" style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", fontSize: "26vw", fontWeight: 800, color: "rgba(62,21,8,0.03)", lineHeight: 0.85, pointerEvents: "none", userSelect: "none", whiteSpace: "nowrap" }}>APPLY</div>
+      <div style={{ padding: "24px 64px 80px", background: "#ece8df", position: "relative", overflow: "hidden" }}>
 
-        <div className="reveal" style={{ maxWidth: "680px", position: "relative", zIndex: 1 }}>
-          <div style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "5px", textTransform: "uppercase", opacity: 0.34, marginBottom: "20px" }}>GET IN TOUCH</div>
-          <div style={{ fontSize: "52px", fontWeight: 300, letterSpacing: "6px", textTransform: "uppercase", lineHeight: 1.08, marginBottom: "28px" }}>DON&apos;T SEE<br />YOUR ROLE?</div>
-          <p style={{ fontSize: "15px", fontWeight: 300, lineHeight: 1.82, opacity: 0.6, maxWidth: "480px", marginBottom: "44px" }}>If you&apos;re the kind of person who cares deeply about craft, we&apos;d like to hear from you regardless of what&apos;s listed above. Send us your portfolio and a short note about what drives you.</p>
-          <button className="btn-careers-primary">SEND YOUR PORTFOLIO</button>
+        <div className="reveal" style={{ display: "grid", gridTemplateColumns: "4fr 1fr", gap: "80px", alignItems: "center", position: "relative", zIndex: 1 }}>
+          {/* Left */}
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "20px" }}>
+              <div style={{ width: "32px", height: "1px", background: "var(--c-text)", opacity: 0.28 }} />
+              <div style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "4px", textTransform: "uppercase", opacity: 0.5 }}>GET IN TOUCH</div>
+            </div>
+            <div style={{ fontSize: "52px", fontWeight: 300, letterSpacing: "6px", textTransform: "uppercase", lineHeight: 1.08, marginBottom: "28px" }}>DON&apos;T SEE<br />YOUR ROLE?</div>
+            <p style={{ fontSize: "15px", fontWeight: 300, lineHeight: 1.82, opacity: 0.6, marginBottom: "44px" }}>If you&apos;re the kind of person who cares deeply about craft — who notices the details others walk past and holds yourself to a standard most don&apos;t bother with — we&apos;d like to hear from you, regardless of what&apos;s listed above. Poetry is built on people who take ownership, think clearly, and bring genuine passion to the work. Send us your portfolio and a short note about what drives you. We read every one.</p>
+            <button className="btn-careers-primary">SEND YOUR PORTFOLIO</button>
+          </div>
+
+          {/* Right — contact details */}
+          <div style={{ borderLeft: "1px solid rgba(62,21,8,0.1)", paddingLeft: "64px", display: "flex", flexDirection: "column", gap: "40px" }}>
+            <div>
+              <div style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "4px", textTransform: "uppercase", opacity: 0.36, marginBottom: "12px" }}>Email Us</div>
+              <a href="mailto:careers@poetryconstructions.com" style={{ fontSize: "15px", fontWeight: 300, letterSpacing: "0.5px", color: "var(--c-text)", textDecoration: "none", opacity: 0.75 }}>careers@poetryconstructions.com</a>
+            </div>
+            <div>
+              <div style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "4px", textTransform: "uppercase", opacity: 0.36, marginBottom: "12px" }}>Studio</div>
+              <div style={{ fontSize: "15px", fontWeight: 300, lineHeight: 1.7, opacity: 0.65 }}>Bangalore, Karnataka<br />India</div>
+            </div>
+            <div>
+              <div style={{ fontSize: "9px", fontWeight: 600, letterSpacing: "4px", textTransform: "uppercase", opacity: 0.36, marginBottom: "12px" }}>Response Time</div>
+              <div style={{ fontSize: "15px", fontWeight: 300, opacity: 0.65 }}>Within 5 business days</div>
+            </div>
+          </div>
         </div>
 
         <div className="reveal" style={{ height: "1px", background: "rgba(62,21,8,0.1)", margin: "80px 0 44px", position: "relative", zIndex: 1 }} />

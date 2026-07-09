@@ -1,7 +1,7 @@
 import { defineQuery } from 'next-sanity'
 
 export const PROJECTS_QUERY = defineQuery(
-  `*[_type == "project"] | order(order asc){ _id, name, location, year, scale, note, image, gallery }`
+  `*[_type == "project"] | order(order asc){ _id, name, location, year, scale, note, image, "gallery": gallery[]{ _key, _type, asset, hotspot, crop, url, caption } }`
 )
 
 export const ARTICLES_QUERY = defineQuery(

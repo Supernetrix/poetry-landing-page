@@ -12,10 +12,21 @@ export const project = defineType({
     defineField({ name: 'note', title: "Architect's Note", type: 'text' }),
     defineField({ name: 'image', title: 'Hero Image', type: 'image', options: { hotspot: true } }),
     defineField({
-      name: 'gallery',
-      title: 'Gallery',
-      type: 'array',
-      of: [{ type: 'image', options: { hotspot: true } }],
+      name: 'gallery', title: 'Gallery', type: 'array',
+      of: [
+        { type: 'image', options: { hotspot: true } },
+        {
+          type: 'object', name: 'youtubeVideo', title: 'YouTube Video',
+          fields: [
+            defineField({ name: 'url', title: 'YouTube URL', type: 'url', validation: Rule => Rule.required() }),
+            defineField({ name: 'caption', title: 'Caption (optional)', type: 'string' }),
+          ],
+          preview: {
+            select: { url: 'url', caption: 'caption' },
+            prepare: ({ url, caption }: { url?: string; caption?: string }) => ({ title: caption || 'YouTube Video', subtitle: url }),
+          },
+        },
+      ],
     }),
     defineField({ name: 'order', title: 'Display Order', type: 'number', description: '1 = first in grid' }),
   ],

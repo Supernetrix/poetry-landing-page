@@ -4,58 +4,44 @@ import { useEffect, useRef, useState } from "react";
 const SERVICES = [
   {
     num: "01",
-    name: "ARCHITECTURE",
-    tag: "FROM MASTERPLAN TO PERMIT",
-    desc: "Every drawing produced in-house — site analysis, concept design, working drawings, structural coordination, and approvals. One architect from first sketch to final handover.",
-    stat: "10+",
-    statLabel: "Years of practice",
+    name: "TURN-KEY SOLUTIONS",
+    tag: "END-TO-END, NOTHING LEFT OUT",
+    desc: "Poetry's turn-key solutions cover everything under one roof — planning, design, government sanctions, construction management, interior design & decoration, and full project oversight. From the first sketch to the final key handover, your dream home is managed entirely by our experienced team.",
+    stat: "100%",
+    statLabel: "End-to-end delivery",
     accent: "rgba(107,29,13,0.55)",
-    img : "/arch final wdwedo.png",
+    img: "/arch final wdwedo.png",
     imgScale: 1.5,
-
-
-
   },
   {
     num: "02",
-    name: "INTERIOR DESIGN",
-    tag: "SPACES THAT FEEL CONSIDERED",
-    desc: "Material boards, 3D visualisations, FF&E schedules and on-site supervision. Interiors that are liveable, beautiful and built to last — no decorator markup.",
-    stat: "200+",
-    statLabel: "Interiors delivered",
+    name: "ARCHITECTURAL DESIGN",
+    tag: "EXOTIC DESIGNS, BUILT TO LAST",
+    desc: "Design has been Poetry's backbone since inception in 2020. Our architects bring exotic, considered homes to life while keeping practical execution firmly in mind — ensuring seamless delivery within set timelines, without compromise on vision.",
+    stat: "6+",
+    statLabel: "Years of practice",
     accent: "rgba(62,21,8,0.55)",
-    img : "/2.png"
+    img: "/2.png",
   },
   {
     num: "03",
-    name: "CONSTRUCTION",
-    tag: "ON-SITE, EVERY SINGLE DAY",
-    desc: "Experienced engineers on site daily. Quality audits at every milestone. We own the build from excavation to finishing — no sub-contracting the supervision.",
-    stat: "100%",
-    statLabel: "Supervised in-house",
+    name: "PROJECT MANAGEMENT",
+    tag: "YOUR PROJECT, PROFESSIONALLY OWNED",
+    desc: "Poetry's PMC expertise draws on deep team experience and the smart use of technology. For clients busy with their lives, we step in as the professional hand on the wheel — tracking every milestone, managing every vendor, and delivering your project with precision.",
+    stat: "50+",
+    statLabel: "Projects managed",
     accent: "rgba(140,39,18,0.55)",
-    img : "/3.png"
+    img: "/3.png",
   },
   {
     num: "04",
-    name: "LANDSCAPE",
-    tag: "THE GROUND FLOOR OF EXPERIENCE",
-    desc: "Gardens, terraces, water features and outdoor living. Landscape is designed from day one alongside the building — not added as an afterthought.",
-    stat: "50+",
-    statLabel: "Outdoor spaces",
+    name: "FARMHOUSE CURATION",
+    tag: "LAND, LIGHT & LIVING",
+    desc: "There is a particular kind of calm that only land can offer. Poetry's farmhouse curation service is built for those who seek it — identifying the right plot, designing a retreat that belongs to its surroundings, and delivering a finished estate where every detail, from the stone underfoot to the view from the verandah, has been considered.",
+    stat: "15+",
+    statLabel: "Estates curated",
     accent: "rgba(90,26,8,0.5)",
-    img : "/4.png"
-
-  },
-  {
-    num: "05",
-    name: "RENOVATION",
-    tag: "BREATHING LIFE INTO EXISTING SPACES",
-    desc: "Full gut or selective refresh — we scope, plan and execute with minimal disruption to your life. The same integrated team, the same single point of contact.",
-    stat: "6–8",
-    statLabel: "Weeks avg. turnaround",
-    accent: "rgba(122,32,16,0.5)",
-    img : "/5.png"
+    img: "/farmhouse curation.png",
   },
 ];
 

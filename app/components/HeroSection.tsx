@@ -71,35 +71,18 @@ export default function HeroSection() {
         {/* Left nav links — desktop only */}
         {!isMobile && (
           <div style={{ display: "flex", gap: "44px", alignItems: "center" }}>
-            <a href="#portfolio" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.30s both" }}>PORTFOLIO</a>
-            <a href="#certifications" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("certifications")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.38s both" }}>RECOGNITION</a>
+            <a href="#certifications" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("certifications")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.38s both" }}>CERTIFICATIONS</a>
             <a href="#about" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("about")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.46s both" }}>ABOUT US</a>
             <a href="#journal" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("journal")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.54s both" }}>JOURNAL</a>
-            <a href="#careers" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("careers")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.62s both" }}>CAREERS</a>
+            <a href="#careers" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("careers")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.62s both" }}>JOBS</a>
           </div>
         )}
 
-        {/* Logo */}
-        <div
-          style={{
-            position: "absolute",
-            left: "50%",
-            fontSize: isMobile ? "28px" : "38px",
-            fontWeight: 800,
-            letterSpacing: "2px",
-            color: "var(--c-text)",
-            textTransform: "uppercase",
-            lineHeight: 1,
-            whiteSpace: "nowrap",
-            animation: "logoEntry 1.0s cubic-bezier(0.22,1,0.36,1) 0.2s both",
-          }}
-        >
-          POETRY
-        </div>
 
-        {/* Right — Client Portal only */}
+        {/* Right — Enquire Now + Client Portal */}
         {!isMobile && (
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
+            <a href="#" className="nav-link nav-link--enquire" style={{ animation: "justFade 0.5s ease 0.36s both" }}>ENQUIRE NOW</a>
             <div className="util-link" style={{ animation: "justFade 0.5s ease 0.40s both" }}>
               <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="1" y="5" width="12" height="8" rx="1" />
@@ -238,7 +221,7 @@ export default function HeroSection() {
                 textTransform: "uppercase",
               }}
             >
-              CURATED<br />ESTATES<br />2026
+              POETRY DESIGNS
             </div>
             <div
               style={{

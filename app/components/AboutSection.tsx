@@ -145,11 +145,11 @@ export default function AboutSection({ certificates: sanityCerts }: { certificat
       >
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 28, position: "relative", zIndex: 1 }}>
           <div style={{ height: 1, width: 48, background: "rgba(var(--c-bg-rgb), 0.25)" }} />
-          <span style={{ fontSize: 10, fontWeight: 400, letterSpacing: 4, textTransform: "uppercase", opacity: 0.48 }}>RECOGNITION</span>
+          <span style={{ fontSize: 10, fontWeight: 400, letterSpacing: 4, textTransform: "uppercase", opacity: 0.48 }}>CERTIFICATIONS</span>
         </div>
 
         <div className="reveal" style={{ marginBottom: 88, position: "relative", zIndex: 1 }}>
-          <div className="hero-title" style={{ fontSize: 52, fontWeight: 300, letterSpacing: 6, textTransform: "uppercase", lineHeight: 1 }}>INDUSTRY RECOGNITION</div>
+          <div className="hero-title" style={{ fontSize: 52, fontWeight: 300, letterSpacing: 6, textTransform: "uppercase", lineHeight: 1 }}>INDUSTRY CERTIFICATIONS</div>
           <div style={{ fontSize: 11, fontWeight: 400, letterSpacing: 3, textTransform: "uppercase", opacity: 0.32, marginTop: 18 }}>CERTIFICATIONS · AWARDS · FEATURES</div>
         </div>
 
@@ -158,17 +158,16 @@ export default function AboutSection({ certificates: sanityCerts }: { certificat
             <div key={col} className={col === "right" ? "cert-right-col" : ""} style={{ display: "flex", flexDirection: "column", gap: 36, height: "100%" }}>
               {certs.filter(c => c.col === col).map((cert, i) => (
                 <div key={colIdx * 2 + i} className="cert-frame" style={{ flex: cert.flex, display: "flex", flexDirection: "column", transform: `rotate(${cert.rotate})` }}>
-                  <CertCorners />
                   <div style={{ flex: 1, minHeight: 0, background: "var(--c-cert-inner)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     {cert.img
-                      ? <img src={cert.img} alt={cert.name} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 24 }} />
+                      ? <img src={cert.img} alt={cert.name} style={{ width: "100%", height: "100%", objectFit: "cover", padding: 10 }} />
                       : <CertPlaceholder label={cert.type} />
                     }
                   </div>
                   <div style={{ padding: "22px 28px 28px", flexShrink: 0, display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16 }}>
                     <div>
                       <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 6, color: "#6b1d0d" }}>{cert.name}</div>
-                      <div style={{ fontSize: 9, fontWeight: 400, letterSpacing: 2, textTransform: "uppercase", opacity: 0.44, lineHeight: 1.6 }}>
+                      <div style={{ fontSize: 9, fontWeight: 400, letterSpacing: 2, textTransform: "uppercase", color: "#6b1d0d", opacity: 0.75, lineHeight: 1.6 }}>
                         {cert.subtitle.split("\n").map((line, j) => (
                           <span key={j}>{line}{j < cert.subtitle.split("\n").length - 1 && <br />}</span>
                         ))}
@@ -176,7 +175,6 @@ export default function AboutSection({ certificates: sanityCerts }: { certificat
                     </div>
                     <div className="year-badge" style={{ flexShrink: 0 }}>{cert.year}</div>
                   </div>
-                  <GoldSeal />
                 </div>
               ))}
             </div>
@@ -215,16 +213,16 @@ export default function AboutSection({ certificates: sanityCerts }: { certificat
             </p>
             <div className="three-col" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", borderTop: "1px solid rgba(var(--c-text-rgb), 0.1)" }}>
               <div style={{ padding: "24px 28px 24px 0", borderRight: "1px solid rgba(var(--c-text-rgb), 0.1)" }}>
-                <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1 }}>100%</div>
-                <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginTop: 8, lineHeight: 1.5 }}>Integrated<br />Service</div>
+                <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1 }}>50+</div>
+                <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginTop: 8, lineHeight: 1.5 }}>Total<br />Projects</div>
               </div>
               <div style={{ padding: "24px 28px", borderRight: "1px solid rgba(var(--c-text-rgb), 0.1)" }}>
-                <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1 }}>1</div>
-                <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginTop: 8, lineHeight: 1.5 }}>Point of<br />Contact</div>
+                <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1 }}>25+</div>
+                <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", opacity: 0.44, marginTop: 8, lineHeight: 1.5 }}>Ongoing<br />Projects</div>
               </div>
               <div style={{ padding: "24px 0 24px 28px", background: "var(--c-text)" }}>
-                <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1, color: "var(--c-bg)" }}>20+</div>
-                <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", color: "rgba(var(--c-bg-rgb), 0.55)", marginTop: 8, lineHeight: 1.5 }}>Years<br />Experience</div>
+                <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1, lineHeight: 1, color: "var(--c-bg)" }}>14+</div>
+                <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", color: "rgba(var(--c-bg-rgb), 0.55)", marginTop: 8, lineHeight: 1.5 }}>Completed<br />Projects</div>
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useMobile } from "../hooks/useMobile";
 import { urlFor } from "@/sanity/lib/image";
@@ -8,48 +9,24 @@ import type { SanityImageSource } from "@sanity/image-url";
 interface SanityCertificate {
   _id: string;
   name?: string;
-  subtitle?: string;
-  year?: string;
-  type?: string;
   image?: SanityImageSource;
 }
 
 interface CertData {
+  id: string;
   name: string;
-  subtitle: string;
-  year: string;
-  type: string;
-  img?: string;
-  flex: number;
-  rotate: string;
-  col: "left" | "right";
+  img: string;
 }
 
-const CERT_LAYOUT = [
-  { flex: 5, rotate: "-0.8deg", col: "left" as const },
-  { flex: 3, rotate: "0.6deg",  col: "left" as const },
-  { flex: 3, rotate: "0.5deg",  col: "right" as const },
-  { flex: 4, rotate: "-0.4deg", col: "right" as const },
-];
-
-const FALLBACK_CERTS: CertData[] = [
-  { name: "Industry Outlook Award", subtitle: "Top 10 Project Management\nServices Startups", year: "2023", type: "CERTIFICATE", flex: 5, rotate: "-0.8deg", col: "left" },
-  { name: "ISO 9001:2015 Certified", subtitle: "Quality Management Systems\nBureau Veritas Certification", year: "2024", type: "CERTIFICATE", flex: 3, rotate: "0.6deg", col: "left" },
-  { name: "IGBC Membership Certificate", subtitle: "Indian Green Building Council · CII\nMembership No. IGBCCS240055", year: "2024", type: "CERTIFICATE", flex: 3, rotate: "0.5deg", col: "right" },
-  { name: "Industry Outlook — Featured Article", subtitle: "A Competent Architecture & Engineering Firm\nDedicated to Curating Exceptional Designs", year: "2023", type: "EDITORIAL FEATURE", flex: 4, rotate: "-0.4deg", col: "right" },
-];
-
 function mergeCerts(sanityCerts: SanityCertificate[]): CertData[] {
-  return sanityCerts.slice(0, 4).map((c, i) => {
-    const layout = CERT_LAYOUT[i] ?? CERT_LAYOUT[0];
-    return {
-      ...layout,
-      name: c.name ?? "",
-      subtitle: c.subtitle ?? "",
-      year: c.year ?? "",
-      type: c.type ?? "CERTIFICATE",
-      img: c.image ? urlFor(c.image).width(600).url() : undefined,
-    };
+  return sanityCerts.flatMap((certificate) => {
+    if (!certificate.image) return [];
+
+    return [{
+      id: certificate._id,
+      name: certificate.name ?? "Certificate",
+      img: urlFor(certificate.image).width(1600).auto("format").url(),
+    }];
   });
 }
 
@@ -76,36 +53,8 @@ const faqItems = [
   },
 ];
 
-function CertCorners() {
-  return (
-    <>
-      <div className="c-corner c-tl" />
-      <div className="c-corner c-tr" />
-      <div className="c-corner c-bl" />
-      <div className="c-corner c-br" />
-    </>
-  );
-}
-
-function CertPlaceholder({ label }: { label: string }) {
-  return (
-    <div style={{ textAlign: "center", opacity: 0.28, padding: 32 }}>
-      <div style={{ width: 36, height: 36, border: "1px solid var(--c-text)", transform: "rotate(45deg)", margin: "0 auto 20px" }} />
-      <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: 4, textTransform: "uppercase" }}>{label}</div>
-      <div style={{ fontSize: 8, letterSpacing: 2, textTransform: "uppercase", opacity: 0.6, marginTop: 8 }}>IMAGE PLACEHOLDER</div>
-    </div>
-  );
-}
-
-function GoldSeal() {
-  return (
-    <div style={{ position: "absolute", bottom: 68, right: 24, width: 28, height: 28, borderRadius: "50%", background: "radial-gradient(circle at 40% 35%, rgba(var(--c-cert-gold-rgb), 0.5), rgba(var(--c-cert-gold-rgb), 0.15))", border: "1px solid rgba(var(--c-cert-gold-rgb), 0.4)" }} />
-  );
-}
-
 export default function AboutSection({ certificates: sanityCerts }: { certificates?: SanityCertificate[] }) {
-  const certs: CertData[] =
-    sanityCerts && sanityCerts.length > 0 ? mergeCerts(sanityCerts) : FALLBACK_CERTS;
+  const certs = mergeCerts(sanityCerts ?? []);
   const rootRef = useRef<HTMLDivElement>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const isMobile = useMobile();
@@ -155,41 +104,18 @@ export default function AboutSection({ certificates: sanityCerts }: { certificat
           <div style={{ fontSize: 11, fontWeight: 400, letterSpacing: 3, textTransform: "uppercase", opacity: 0.32, marginTop: 18 }}>CERTIFICATIONS · AWARDS · FEATURES</div>
         </div>
 
-        <div className="reveal cert-wall" style={{ display: "grid", gridTemplateColumns: "38% 1fr", gap: 36, position: "relative", zIndex: 1, height: isMobile ? "auto" : "880px" }}>
-          {(["left", "right"] as const).map((col, colIdx) => (
-            <div key={col} className={col === "right" ? "cert-right-col" : ""} style={{ display: "flex", flexDirection: "column", gap: 36, height: isMobile ? "auto" : "100%" }}>
-              {certs.filter(c => c.col === col).map((cert, i) => (
-                <div key={colIdx * 2 + i} className="cert-frame" style={{ flex: isMobile ? "none" : cert.flex, display: "flex", flexDirection: "column", transform: `rotate(${cert.rotate})` }}>
-                  <div style={{ flex: 1, minHeight: 0, background: "var(--c-cert-inner)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    {cert.img
-                      ? <img src={cert.img} alt={cert.name} style={{ width: "100%", height: "100%", objectFit: "cover", padding: 10 }} />
-                      : <CertPlaceholder label={cert.type} />
-                    }
-                  </div>
-                  <div style={{ padding: "22px 28px 28px", flexShrink: 0, display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16 }}>
-                    <div>
-                      <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: 2.5, textTransform: "uppercase", marginBottom: 6, color: "#6b1d0d" }}>{cert.name}</div>
-                      <div style={{ fontSize: 9, fontWeight: 400, letterSpacing: 2, textTransform: "uppercase", color: "#6b1d0d", opacity: 0.75, lineHeight: 1.6 }}>
-                        {cert.subtitle.split("\n").map((line, j) => (
-                          <span key={j}>{line}{j < cert.subtitle.split("\n").length - 1 && <br />}</span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="year-badge" style={{ flexShrink: 0 }}>{cert.year}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="reveal certificate-gallery">
+          {certs.map((certificate) => (
+            <Image
+              key={certificate.id}
+              className="certificate-image"
+              src={certificate.img}
+              alt={certificate.name}
+              width={1600}
+              height={1200}
+              sizes="(max-width: 900px) calc(100vw - 56px), 1100px"
+            />
           ))}
-        </div>
-
-        <div className="reveal" style={{ height: 1, background: "rgba(var(--c-bg-rgb), 0.12)", margin: "80px 0 48px", position: "relative", zIndex: 1 }} />
-        <div className="reveal" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative", zIndex: 1 }}>
-          <span style={{ fontSize: 10, fontWeight: 400, letterSpacing: 3, textTransform: "uppercase", opacity: 0.3 }}>All certifications verified</span>
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <div style={{ width: 10, height: 10, background: "rgba(var(--c-bg-rgb), 0.18)", transform: "rotate(45deg)" }} />
-            <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", opacity: 0.34 }}>POETRY CONSTRUCTIONS</span>
-          </div>
         </div>
       </section>
 

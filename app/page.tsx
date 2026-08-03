@@ -1,6 +1,8 @@
 import HeroSection from "./components/HeroSection";
+import SecondHeroSection from "./components/SecondHeroSection";
 import WhatWeDo from "./components/WhatWeDo";
 import PortfolioGrid from "./components/PortfolioGrid";
+import EditorialPortfolioSection from "./components/EditorialPortfolioSection";
 import AboutSection from "./components/AboutSection";
 import JournalSection from "./components/JournalSection";
 import CareersSection from "./components/CareersSection";
@@ -26,8 +28,10 @@ export default async function Home() {
   return (
     <main>
       <HeroSection />
+      <SecondHeroSection />
       <WhatWeDo />
       <PortfolioGrid projects={projects.slice(0, 6)} isHomePage={true} />
+      <EditorialPortfolioSection projects={projects.slice(0, 6)} />
       <AboutSection certificates={certificates} />
       <JournalSection articles={articles} />
       <CareersSection roles={jobs} />

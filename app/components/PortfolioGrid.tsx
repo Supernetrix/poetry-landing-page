@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useMobile } from "../hooks/useMobile";
 import { urlFor } from "@/sanity/lib/image";
 import type { SanityImageSource } from "@sanity/image-url";
+import Link from "next/link";
 
 type GalleryItem =
   | { type: "image"; url: string; key: string }
@@ -173,8 +174,8 @@ const FALLBACK_PROJECTS: Project[] = [
 ];
 
 function mergeProjects(sanityProjects: SanityProject[]): Project[] {
-  return sanityProjects.slice(0, 6).map((p, i) => {
-    const layout = PROJECT_LAYOUT[i] ?? PROJECT_LAYOUT[0];
+  return sanityProjects.map((p, i) => {
+    const layout = PROJECT_LAYOUT[i % PROJECT_LAYOUT.length];
     const gallery: GalleryItem[] = [];
     for (const g of p.gallery ?? []) {
       if (g._type === "youtubeVideo") {
@@ -186,6 +187,7 @@ function mergeProjects(sanityProjects: SanityProject[]): Project[] {
     }
     return {
       ...layout,
+      idx: (i + 1).toString().padStart(2, "0"),
       name: p.name,
       location: p.location ?? "",
       year: p.year ?? "",
@@ -197,7 +199,7 @@ function mergeProjects(sanityProjects: SanityProject[]): Project[] {
   });
 }
 
-export default function PortfolioGrid({ projects: sanityProjects }: { projects?: SanityProject[] }) {
+export default function PortfolioGrid({ projects: sanityProjects, isHomePage = false }: { projects?: SanityProject[]; isHomePage?: boolean }) {
   const projects: Project[] =
     sanityProjects && sanityProjects.length > 0
       ? mergeProjects(sanityProjects)
@@ -208,6 +210,25 @@ export default function PortfolioGrid({ projects: sanityProjects }: { projects?:
   const [lightbox, setLightbox] = useState<number | null>(null);
   const galRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
+  const actionButtonStyle: React.CSSProperties = {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "var(--c-btn)",
+    color: "var(--c-btn-text)",
+    fontFamily: "var(--font-barlow), Helvetica, sans-serif",
+    fontSize: isMobile ? "9.5px" : "10.5px",
+    fontWeight: 600,
+    letterSpacing: isMobile ? "2.4px" : "2.5px",
+    lineHeight: 1,
+    textAlign: "center",
+    textTransform: "uppercase",
+    padding: isMobile ? "15px 18px" : "16px 32px",
+    textDecoration: "none",
+    width: isMobile ? "100%" : "auto",
+    maxWidth: isMobile ? "320px" : "none",
+    minHeight: isMobile ? "48px" : "auto",
+  };
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -259,26 +280,52 @@ export default function PortfolioGrid({ projects: sanityProjects }: { projects?:
       {/* ── SECTION HEADER ───────────────────────── */}
       <div
         style={{
-          padding: isMobile ? `60px ${px} 40px` : `112px ${px} 72px`,
+          padding: isMobile 
+            ? (isHomePage ? `60px ${px} 40px` : `32px ${px} 40px`) 
+            : (isHomePage ? `112px ${px} 72px` : `48px ${px} 72px`),
           animation: "headerIn 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s both",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "28px" }}>
-          <div
-            style={{
-              height: "1px",
-              background: "var(--c-text)",
-              opacity: 0.28,
-              animation: "lineGrow48 0.55s ease 0.4s both",
-            }}
-          />
-          <span style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "4px", textTransform: "uppercase", opacity: 0.5 }}>SELECTED WORKS</span>
+          {isHomePage ? (
+            <>
+              <div
+                style={{
+                  height: "1px",
+                  width: "48px",
+                  background: "var(--c-text)",
+                  opacity: 0.28,
+                  animation: "lineGrow48 0.55s ease 0.4s both",
+                }}
+              />
+              <span style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "4px", textTransform: "uppercase", opacity: 0.5 }}>SELECTED WORKS</span>
+            </>
+          ) : (
+            <Link href="/" className="nav-link" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "var(--c-btn)" }}>
+              <span style={{ fontSize: "14px" }}>&larr;</span> BACK TO HOME
+            </Link>
+          )}
         </div>
 
         <div style={{ fontSize: isMobile ? "32px" : "56px", fontWeight: 300, letterSpacing: isMobile ? "6px" : "9px", textTransform: "uppercase", lineHeight: 1 }}>PORTFOLIO</div>
         <div style={{ fontSize: "11px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.32, marginTop: "14px" }}>
           {projects.length} ESTATES · 2023–2026
         </div>
+        {isHomePage && !isMobile && (
+          <Link
+            href="/estates"
+            className="cta-all"
+            style={{
+              ...actionButtonStyle,
+              position: isMobile ? "static" : "absolute",
+              right: isMobile ? "auto" : "64px",
+              bottom: isMobile ? "auto" : "100px",
+              marginTop: isMobile ? "28px" : "0",
+            }}
+          >
+            VIEW ENTIRE PORTFOLIO →
+          </Link>
+        )}
       </div>
 
       {/* ── GRID ─────────────────────────────────── */}
@@ -326,11 +373,32 @@ export default function PortfolioGrid({ projects: sanityProjects }: { projects?:
       </div>
 
       {/* ── FOOTER NOTE ──────────────────────────── */}
-      <div style={{ padding: isMobile ? `32px ${px} 56px` : `52px ${px} 96px`, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-          <div style={{ width: "32px", height: "1px", background: "var(--c-text)", opacity: 0.22 }} />
-          <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.36 }}>POETRY STUDIOS</span>
-        </div>
+      <div style={{ padding: isMobile ? `36px ${px} 64px` : `52px ${px} 96px`, display: "flex", alignItems: isMobile ? "stretch" : "center", justifyContent: "space-between", flexDirection: isMobile ? "column" : "row", flexWrap: "wrap", gap: isMobile ? "28px" : "24px" }}>
+        {!isMobile && (
+          <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "32px", height: "1px", background: "var(--c-text)", opacity: 0.22 }} />
+            <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.36 }}>POETRY STUDIOS</span>
+          </div>
+        )}
+        {isHomePage ? (
+          isMobile && (
+            <Link
+              href="/estates"
+              className="cta-all"
+              style={actionButtonStyle}
+            >
+              VIEW ENTIRE PORTFOLIO →
+            </Link>
+          )
+        ) : (
+          <Link
+            href="/"
+            className="cta-all"
+            style={actionButtonStyle}
+          >
+            ← BACK TO HOME
+          </Link>
+        )}
       </div>
 
       {/* ── PROJECT DETAIL OVERLAY ───────────────── */}

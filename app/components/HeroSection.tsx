@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useMobile } from "../hooks/useMobile";
+import Link from "next/link";
 
 export default function HeroSection() {
   const isMobile = useMobile();
@@ -90,20 +91,42 @@ export default function HeroSection() {
           animation: "navEntry 0.9s cubic-bezier(0.22,1,0.36,1) 0.15s both",
         }}
       >
-        {/* Left nav links — desktop only */}
-        {!isMobile && (
-          <div style={{ display: "flex", gap: "44px", alignItems: "center" }}>
+        {/* Left (Desktop Logo / Mobile Hamburger) */}
+        {!isMobile ? (
+          <div style={{ display: "flex", alignItems: "center", flex: 1, justifyContent: "flex-start" }}>
+            <img src="/logo.png" alt="Poetry Logo" style={{ height: "54px", width: "auto" }} />
+          </div>
+        ) : (
+          <div style={{ flex: 1, display: "flex", alignItems: "center", marginTop: "40px" }}>
+            <button
+              onClick={() => openMenu()}
+              style={{ background: "none", border: "none", cursor: "pointer", padding: "8px", display: "flex", flexDirection: "column", gap: "5px" }}
+              aria-label="Open menu"
+            >
+              <span style={{ display: "block", width: "22px", height: "1.5px", background: "var(--c-text)" }} />
+              <span style={{ display: "block", width: "22px", height: "1.5px", background: "var(--c-text)" }} />
+              <span style={{ display: "block", width: "14px", height: "1.5px", background: "var(--c-text)" }} />
+            </button>
+          </div>
+        )}
+
+        {/* Center (Desktop Links / Mobile Logo) */}
+        {!isMobile ? (
+          <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, transform: "translateX(-50%)", display: "flex", gap: "44px", alignItems: "center" }}>
             <a href="#certifications" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("certifications")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.38s both" }}>CERTIFICATIONS</a>
             <a href="#about" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("about")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.46s both" }}>ABOUT US</a>
             <a href="#journal" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("journal")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.54s both" }}>JOURNAL</a>
             <a href="#careers" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById("careers")?.scrollIntoView({ behavior: "smooth" }); }} style={{ animation: "justFade 0.5s ease 0.62s both" }}>JOBS</a>
           </div>
+        ) : (
+          <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, calc(-50% + 20px))" }}>
+            <img src="/logo.png" alt="Poetry Logo" style={{ height: "36px", width: "auto" }} />
+          </div>
         )}
 
-
-        {/* Right — Enquire Now + Client Portal */}
-        {!isMobile && (
-          <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
+        {/* Right (Desktop Actions / Mobile Enquire Now) */}
+        {!isMobile ? (
+          <div style={{ display: "flex", alignItems: "center", gap: "28px", flex: 1, justifyContent: "flex-end" }}>
             <a href="#" className="nav-link nav-link--enquire" style={{ animation: "justFade 0.5s ease 0.36s both" }}>ENQUIRE NOW</a>
             <div className="util-link" style={{ animation: "justFade 0.5s ease 0.40s both" }}>
               <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
@@ -113,19 +136,10 @@ export default function HeroSection() {
               <span style={{ fontSize: "10px", fontWeight: 400, letterSpacing: "2px", textTransform: "uppercase" }}>CLIENT PORTAL</span>
             </div>
           </div>
-        )}
-
-        {/* Mobile — hamburger only */}
-        {isMobile && (
-          <button
-            onClick={() => openMenu()}
-            style={{ background: "none", border: "none", cursor: "pointer", padding: "8px", display: "flex", flexDirection: "column", gap: "5px", marginLeft: "auto", marginTop: "40px" }}
-            aria-label="Open menu"
-          >
-            <span style={{ display: "block", width: "22px", height: "1.5px", background: "var(--c-text)" }} />
-            <span style={{ display: "block", width: "22px", height: "1.5px", background: "var(--c-text)" }} />
-            <span style={{ display: "block", width: "14px", height: "1.5px", background: "var(--c-text)" }} />
-          </button>
+        ) : (
+          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: "40px" }}>
+            <a href="#" className="nav-link nav-link--enquire">ENQUIRE NOW</a>
+          </div>
         )}
       </nav>
 
@@ -238,9 +252,9 @@ export default function HeroSection() {
             paddingBottom: isMobile ? "28px" : "48px",
           }}
         >
-          <button className="btn-primary" style={{ animation: "slideUp 0.7s cubic-bezier(0.22,1,0.36,1) 1.20s both", ...(isMobile && { fontSize: "10px", padding: "14px 26px", letterSpacing: "2px" }) }} onClick={() => document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" })}>
+          <Link href="/estates" className="btn-primary" style={{ textDecoration: "none", animation: "slideUp 0.7s cubic-bezier(0.22,1,0.36,1) 1.20s both", ...(isMobile && { fontSize: "10px", padding: "14px 26px", letterSpacing: "2px" }) }}>
             VIEW PORTFOLIO
-          </button>
+          </Link>
           <button className="btn-ghost" style={{ animation: "slideUp 0.7s cubic-bezier(0.22,1,0.36,1) 1.35s both", ...(isMobile && { fontSize: "10px", letterSpacing: "2px" }) }}>
             START YOUR PROJECT
           </button>

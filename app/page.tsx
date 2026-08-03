@@ -27,7 +27,7 @@ export default async function Home() {
     <main>
       <HeroSection />
       <WhatWeDo />
-      <PortfolioGrid projects={projects} />
+      <PortfolioGrid projects={projects.slice(0, 6)} isHomePage={true} />
       <AboutSection certificates={certificates} />
       <JournalSection articles={articles} />
       <CareersSection roles={jobs} />

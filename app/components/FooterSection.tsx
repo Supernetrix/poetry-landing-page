@@ -9,6 +9,7 @@ export default function FooterSection() {
 
   return (
     <footer
+      id="footer"
       style={{
         position: "relative",
         background: "var(--c-text)",

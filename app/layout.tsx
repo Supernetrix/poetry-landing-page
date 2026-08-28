@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import { Allura, Barlow } from "next/font/google";
+import { Allura, Barlow, Playfair_Display } from "next/font/google";
+import SiteHeader from "./components/SiteHeader";
 import "./globals.css";
 
 const barlow = Barlow({
-  weight: ["300", "400", "600", "800"],
+  weight: ["300", "400", "500", "600", "800"],
   subsets: ["latin"],
   variable: "--font-barlow",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  weight: ["500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-quote",
   display: "swap",
 });
 
@@ -27,8 +35,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${barlow.variable} ${allura.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${barlow.variable} ${playfair.variable} ${allura.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col">
+        <SiteHeader />
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,5 +1,7 @@
 import HeroSection from "./components/HeroSection";
-import SecondHeroSection from "./components/SecondHeroSection";
+import StatsSnapshot from "./components/StatsSnapshot";
+import ConceptToReality from "./components/ConceptToReality";
+import QuoteSplit from "./components/QuoteSplit";
 import WhatWeDo from "./components/WhatWeDo";
 import PortfolioGrid from "./components/PortfolioGrid";
 import EditorialPortfolioSection from "./components/EditorialPortfolioSection";
@@ -28,7 +30,20 @@ export default async function Home() {
   return (
     <main>
       <HeroSection />
-      <SecondHeroSection />
+      <StatsSnapshot />
+      <ConceptToReality />
+      <QuoteSplit
+        imageSide="left"
+        imageSrc="/IMG_0248.jpg"
+        imageAlt="Poetry home facade"
+        lines={["Spaces drawn", "for how you", "live"]}
+      />
+      <QuoteSplit
+        imageSide="right"
+        imageSrc="/IMG_0276.jpg"
+        imageAlt="Poetry entrance and verandah"
+        lines={["Designs that", "Last for", "Generations"]}
+      />
       <WhatWeDo />
       <PortfolioGrid projects={projects.slice(0, 6)} isHomePage={true} />
       <EditorialPortfolioSection projects={projects.slice(0, 6)} />

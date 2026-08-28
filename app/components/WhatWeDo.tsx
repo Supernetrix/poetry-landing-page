@@ -83,6 +83,7 @@ export default function WhatWeDo() {
   if (isMobile) {
     return (
       <section
+        id="services"
         ref={rootRef}
         style={{ width: "100%", fontFamily: "'Barlow', Helvetica, sans-serif", marginTop: "48px" }}
       >
@@ -155,6 +156,7 @@ export default function WhatWeDo() {
   /* ── DESKTOP LAYOUT ─────────────────────────────────────────── */
   return (
     <section
+      id="services"
       ref={rootRef}
       style={{ width: "100%", fontFamily: "'Barlow', Helvetica, sans-serif", marginTop: "80px" }}
     >

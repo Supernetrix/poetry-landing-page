@@ -1,0 +1,236 @@
+.project-detail {
+  --pd-ink: #8c7d70;
+  --pd-label: #8a5a38;
+  width: 100%;
+  padding: 120px 0 0;
+  background: #ffffff;
+  color: var(--pd-ink);
+  font-family: var(--font-barlow), Helvetica, sans-serif;
+}
+
+.project-detail h1,
+.project-detail h2 {
+  margin: 0;
+  color: var(--pd-ink);
+  text-transform: uppercase;
+}
+
+.project-detail h1 {
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+}
+
+.project-detail h2 {
+  margin-bottom: 22px;
+  font-size: clamp(16px, 1.5vw, 20px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.project-detail__hero,
+.project-detail__band {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+.project-detail__hero > *,
+.project-detail__band > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+.project-detail__sketch,
+.project-detail__band-media,
+.project-detail__gallery-feature,
+.project-detail__gallery-thumb {
+  position: relative;
+  overflow: hidden;
+  background: #efe8de;
+}
+
+.project-detail__sketch {
+  min-height: min(78vh, 780px);
+}
+
+.project-detail__sketch-img {
+  object-fit: contain;
+  object-position: center;
+  padding: 24px;
+}
+
+.project-detail__summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  padding: clamp(36px, 5vw, 64px);
+}
+
+.project-detail__intro {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.project-detail__specs {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 0;
+}
+
+.project-detail__spec {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+}
+
+.project-detail__spec dt,
+.project-detail__spec dd {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.project-detail__spec dt {
+  color: #ffffff;
+  background: var(--pd-label);
+}
+
+.project-detail__spec dd {
+  color: var(--pd-ink);
+  background: #ffffff;
+  border: 1px solid #ddd4c8;
+}
+
+.project-detail__band-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(36px, 5vw, 64px);
+}
+
+.project-detail__band-copy ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-detail__band-copy li strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.project-detail__band-copy p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.project-detail__band-media {
+  min-height: min(70vh, 680px);
+}
+
+.project-detail__photo {
+  object-fit: cover;
+  object-position: center;
+}
+
+.project-detail__gallery,
+.project-detail__tour {
+  padding: 56px clamp(20px, 4vw, 48px) 0;
+}
+
+.project-detail__gallery {
+  padding-bottom: 24px;
+}
+
+.project-detail__tour {
+  padding-bottom: 72px;
+}
+
+.project-detail__gallery-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 12px;
+}
+
+.project-detail__gallery-feature {
+  min-height: 520px;
+}
+
+.project-detail__gallery-thumbs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.project-detail__gallery-thumb {
+  min-height: 164px;
+}
+
+.project-detail__video {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+  background: #ece6dc;
+}
+
+.project-detail__video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .project-detail {
+    padding-top: 104px;
+  }
+
+  .project-detail__hero,
+  .project-detail__band,
+  .project-detail__band--flip,
+  .project-detail__gallery-grid {
+    grid-template-columns: 1fr;
+    margin-left: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .project-detail__sketch,
+  .project-detail__band-media,
+  .project-detail__gallery-feature {
+    min-height: 320px;
+  }
+
+  .project-detail__summary,
+  .project-detail__band-copy {
+    padding: 32px 24px;
+  }
+
+  .project-detail__gallery,
+  .project-detail__tour {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .project-detail__gallery-thumb {
+    min-height: 140px;
+  }
+}

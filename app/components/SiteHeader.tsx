@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useMobile } from "../hooks/useMobile";
 
 const NAV_LINKS = [
+  { label: "HOME", href: "/" },
   { label: "OUR STORY", href: "/ourstory" },
   { label: "PROJECTS", href: "/projects" },
   { label: "SERVICES", href: "/#services" },

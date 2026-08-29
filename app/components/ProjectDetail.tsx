@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { SanityImageSource } from "@sanity/image-url";
 import { urlFor } from "@/sanity/lib/image";
 import "./ProjectDetail.css";
@@ -101,6 +102,11 @@ export default function ProjectDetail({ project }: { project: ProjectDetailData 
 
   return (
     <article className="project-detail">
+      <div className="project-detail__toolbar">
+        <Link href="/projects" className="project-detail__back">
+          Back to projects
+        </Link>
+      </div>
       <section className="project-detail__hero">
         <div className="project-detail__sketch">
           {sketchSrc ? (

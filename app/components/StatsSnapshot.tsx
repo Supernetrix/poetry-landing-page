@@ -17,7 +17,6 @@ export default function StatsSnapshot() {
           </div>
         ))}
       </div>
-      <hr className="stats-snapshot__rule" />
     </section>
   );
 }

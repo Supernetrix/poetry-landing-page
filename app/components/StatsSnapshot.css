@@ -2,7 +2,7 @@
   --concept-gold: #c4a06a;
   width: 100%;
   background: #ffffff;
-  padding: clamp(48px, 7vh, 80px) clamp(20px, 4.5vw, 64px) 0;
+  padding: clamp(48px, 7vh, 80px) clamp(20px, 4.5vw, 64px) clamp(32px, 5vh, 56px);
   font-family: var(--font-barlow), Helvetica, sans-serif;
 }
 
@@ -12,7 +12,7 @@
   justify-content: space-evenly;
   gap: clamp(20px, 5vw, 72px);
   max-width: 860px;
-  margin: 0 auto 40px;
+  margin: 0 auto;
 }
 
 .stats-snapshot__stat {
@@ -43,19 +43,9 @@
   color: #ffffff;
 }
 
-.stats-snapshot__rule {
-  display: block;
-  width: 100%;
-  height: 1.5px;
-  margin: 0;
-  background: var(--concept-gold);
-  border: 0;
-}
-
 @media (max-width: 900px) {
   .stats-snapshot__row {
     gap: 12px;
-    margin-bottom: 28px;
   }
 
   .stats-snapshot__stat {

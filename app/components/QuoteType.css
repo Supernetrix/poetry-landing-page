@@ -4,44 +4,79 @@
   place-items: center;
   height: 100%;
   min-height: inherit;
+  padding: clamp(24px, 4vw, 48px);
   background: #ffffff;
-  color: #8b7e6d;
+  color: #8c735d;
 }
 
-.quote-type__text {
-  position: relative;
-  display: inline-block;
-  padding: 0.45em 0.55em 0.5em;
+.quote-type__grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 1fr auto 1fr;
+  align-items: stretch;
+  justify-items: stretch;
+  width: min(100%, 38em);
+  min-height: min(72%, 520px);
   font-family: var(--font-quote), "Playfair Display", "Times New Roman", serif;
-  font-size: clamp(26px, 2.8vw, 44px);
+  font-size: clamp(26px, 2.7vw, 42px);
+  color: inherit;
+}
+
+.quote-type__copy {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
+  justify-self: center;
+  padding: 0.12em 0.35em;
+  font: inherit;
   font-weight: 500;
   font-style: normal;
-  line-height: 1.38;
+  line-height: 1.55;
   letter-spacing: 0.04em;
   text-align: center;
   text-transform: uppercase;
-  color: #8b7e6d;
+  white-space: nowrap;
 }
 
-.quote-type__text::before,
-.quote-type__text::after {
-  position: absolute;
+.quote-type__mark {
+  display: flex;
   font-family: inherit;
-  font-size: 2.05em;
+  font-size: 5.1em;
   font-weight: 700;
-  line-height: 0.7;
-  color: #8b7e6d;
+  line-height: 0.72;
+  color: inherit;
   pointer-events: none;
+  user-select: none;
 }
 
-.quote-type__text::before {
-  content: "“";
-  top: -0.08em;
-  left: -0.12em;
+.quote-type__mark--open {
+  grid-column: 1;
+  grid-row: 1;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0 0.02em 0.02em 0;
 }
 
-.quote-type__text::after {
-  content: "”";
-  right: -0.08em;
-  bottom: -0.22em;
+.quote-type__mark--close {
+  grid-column: 3;
+  grid-row: 3;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0.02em 0 0 0.02em;
+}
+
+@media (max-width: 900px) {
+  .quote-type {
+    padding: 40px 20px;
+  }
+
+  .quote-type__grid {
+    width: 100%;
+    min-height: 280px;
+    font-size: clamp(22px, 6.4vw, 34px);
+  }
+
+  .quote-type__copy {
+    white-space: normal;
+  }
 }

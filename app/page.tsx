@@ -44,6 +44,24 @@ export default async function Home() {
         imageAlt="Poetry entrance and verandah"
         lines={["Designs that", "Last for", "Generations"]}
       />
+      <QuoteSplit
+        imageSide="left"
+        imageSrc="/IMG_0534.jpg"
+        imageAlt="Poetry residence interior"
+        lines={["Building", "Greener Homes", "For a Better", "Future"]}
+      />
+      <QuoteSplit
+        imageSide="right"
+        imageSrc="/IMG_0543.jpg"
+        imageAlt="Poetry living space"
+        lines={["The Shape", "Of Modern", "Granduer"]}
+      />
+      <QuoteSplit
+        imageSide="left"
+        imageSrc="/IMG_0982.jpg"
+        imageAlt="Poetry courtyard"
+        lines={["Meticulous", "Planning for", "Every Project"]}
+      />
       <WhatWeDo />
       <PortfolioGrid projects={projects.slice(0, 6)} isHomePage={true} />
       <EditorialPortfolioSection projects={projects.slice(0, 6)} />

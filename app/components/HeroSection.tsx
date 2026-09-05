@@ -5,7 +5,7 @@ export default function HeroSection() {
     <section className="black-hero" aria-label="Poetry Designs">
       <div className="black-hero__media" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/IMG_0569.jpg" alt="" />
+        <img src="/hero-section-bg.jpeg" alt="" />
       </div>
 
       <div className="black-hero__bottom">
@@ -15,7 +15,8 @@ export default function HeroSection() {
         </div>
 
         <div className="black-hero__cta">
-          <span className="black-hero__house" aria-hidden="true" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="black-hero__house" src="/logo.png" alt="" />
           <a href="mailto:hello@poetryconstructions.com" className="black-hero__enquire">
             ENQUIRE
           </a>

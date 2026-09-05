@@ -1,0 +1,87 @@
+.quote-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  overflow: hidden;
+  background: #faf9f6;
+}
+
+.quote {
+  position: absolute;
+  font-family: var(--font-quote), "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(130px, 12vw, 215px);
+  font-weight: 400;
+  line-height: 0.55;
+  color: #9a8067;
+  user-select: none;
+  pointer-events: none;
+}
+
+.quote--open {
+  top: 22%;
+  left: 8%;
+}
+
+.quote--close {
+  right: 6%;
+  bottom: 17%;
+}
+
+.quote-text {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  color: #8e765f;
+  font-family: var(--font-quote), "Playfair Display", Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  font-size: clamp(50px, 4vw, 78px);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.quote-text span {
+  display: block;
+  white-space: nowrap;
+}
+
+.quote-text span + span {
+  margin-top: 28px;
+}
+
+@media (max-width: 1000px) {
+  .quote-panel {
+    height: 560px;
+    min-height: 560px;
+  }
+
+  .quote-text {
+    font-size: clamp(48px, 8vw, 72px);
+  }
+}
+
+@media (max-width: 600px) {
+  .quote-panel {
+    height: 480px;
+    min-height: 480px;
+  }
+
+  .quote {
+    font-size: 125px;
+  }
+
+  .quote-text {
+    font-size: 42px;
+  }
+
+  .quote-text span + span {
+    margin-top: 18px;
+  }
+}

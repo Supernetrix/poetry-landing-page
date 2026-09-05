@@ -22,13 +22,6 @@
   --bh-nav-border: rgba(168, 128, 78, 0.32);
   --bh-nav-text: rgba(62, 21, 8, 0.82);
 
-  /* Service accent bars (WhatWeDo bottom stripe per service) */
-  --c-svc-1: rgba(107, 29, 13, 0.55);
-  --c-svc-2: rgba(62, 21, 8, 0.55);
-  --c-svc-3: rgba(140, 39, 18, 0.55);
-  --c-svc-4: rgba(90, 26, 8, 0.5);
-  --c-svc-5: rgba(122, 32, 16, 0.5);
-
   --heading-weight: 300;
   --heading-tracking: 6px;
   --heading-size: 27px;
@@ -169,8 +162,8 @@ a { text-decoration: none; }
 /* ── BLACK HERO ───────────────────────────────────────────── */
 .black-hero {
   --bh-bg: var(--c-bg);
-  --bh-accent: #A43009;
-  --bh-accent-hover: #8B2808;
+  --bh-accent: #EF770B;
+  --bh-accent-hover: #d46609;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -310,12 +303,9 @@ a { text-decoration: none; }
 
 .black-hero__house {
   width: clamp(64px, 7vw, 92px);
-  aspect-ratio: 1;
   height: auto;
   display: block;
-  background-color: #A43009;
-  -webkit-mask: url("/logo.png") center / contain no-repeat;
-  mask: url("/logo.png") center / contain no-repeat;
+  object-fit: contain;
 }
 
 .black-hero__enquire {
@@ -325,7 +315,7 @@ a { text-decoration: none; }
   min-width: clamp(120px, 12vw, 156px);
   padding: 14px clamp(28px, 3vw, 40px);
   border-radius: 999px;
-  background-color: #A43009;
+  background-color: #EF770B;
   color: #ffffff;
   font-size: clamp(10px, 0.95vw, 12px);
   font-weight: 700;
@@ -337,7 +327,7 @@ a { text-decoration: none; }
 
 .black-hero__enquire:hover,
 .black-hero__enquire:focus-visible {
-  background-color: #8B2808;
+  background-color: #d46609;
 }
 
 @media (max-width: 1200px) {

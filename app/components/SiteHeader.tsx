@@ -7,10 +7,11 @@ const NAV_LINKS = [
   { label: "HOME", href: "/" },
   { label: "OUR STORY", href: "/ourstory" },
   { label: "PROJECTS", href: "/projects" },
-  { label: "CERTIFICATIONS", href: "/#certifications" },
+  { label: "SERVICES", href: "/services" },
+  { label: "CERTIFICATIONS", href: "/certifications" },
   { label: "ECO HOMES", href: "/estates" },
-  { label: "CAREERS", href: "/#careers" },
-  { label: "SOCIAL", href: "/#footer" },
+  { label: "CAREERS", href: "/careers" },
+  { label: "SOCIAL", href: "/social" },
 ] as const;
 
 export default function SiteHeader() {

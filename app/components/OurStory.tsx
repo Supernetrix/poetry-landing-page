@@ -48,14 +48,14 @@ export default function OurStory() {
       <StoryBlock
         title="Our Story"
         imageSide="right"
-        imageSrc="/IMG_0982.jpg"
-        imageAlt="Poetry villa at dusk"
+        imageSrc="/our-story-image-1.png"
+        imageAlt="Poetry villa under the night sky"
         paragraphs={BLOCK_ONE}
       />
       <StoryBlock
         imageSide="left"
-        imageSrc="/IMG_0543.jpg"
-        imageAlt="Poetry team on site"
+        imageSrc="/our-story-image-2.png"
+        imageAlt="Poetry team at an evening gathering"
         paragraphs={BLOCK_TWO}
       />
 

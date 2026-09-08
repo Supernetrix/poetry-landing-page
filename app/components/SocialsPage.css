@@ -1,0 +1,616 @@
+.socials-page {
+  --sv-bg: #faf9f6;
+  --sv-ink: #8c7d70;
+  --sv-title: #8e765f;
+  --sv-line: #8b7d6b;
+  --sv-muted: rgba(140, 125, 112, 0.78);
+  --sv-star: #c4a574;
+  width: 100%;
+  padding: 132px clamp(20px, 5vw, 72px) 88px;
+  background: var(--sv-bg);
+  color: var(--sv-ink);
+  font-family: var(--font-barlow), Helvetica, sans-serif;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.socials-hero {
+  margin-bottom: clamp(56px, 8vw, 88px);
+}
+
+.socials-hero__kicker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: clamp(28px, 4vw, 40px);
+  color: var(--sv-title);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.socials-hero__rule,
+.social-band__rule,
+.socials-close__rule {
+  display: block;
+  height: 1px;
+  background: var(--sv-line);
+}
+
+.socials-hero__rule {
+  width: 72px;
+}
+
+.socials-hero h1 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.06em;
+  margin: 0;
+  color: var(--sv-title);
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: clamp(42px, 6vw, 76px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.socials-hero__lead {
+  margin: clamp(18px, 2.5vw, 28px) 0 0;
+  max-width: 34em;
+  color: var(--sv-muted);
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: clamp(16px, 1.6vw, 20px);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.socials-block {
+  margin-bottom: clamp(56px, 8vw, 96px);
+}
+
+.social-band {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.social-band__label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  flex: 1;
+  color: var(--sv-title);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.social-band__rule {
+  flex: 1;
+  min-width: 40px;
+}
+
+.social-band__meta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: 0 0 auto;
+  color: var(--sv-title);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.social-band__action {
+  color: inherit;
+}
+
+.social-band__action strong {
+  font-weight: 700;
+}
+
+.social-ig {
+  display: grid;
+  grid-template-columns: 1.08fr 1fr 1fr;
+  grid-template-rows: minmax(200px, 24vh) minmax(200px, 24vh);
+  grid-template-areas:
+    "tall mid-top right-top"
+    "tall mid-bottom right-bottom";
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social-ig__item {
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+  background: #efe8de;
+}
+
+.social-ig__item--tall { grid-area: tall; }
+.social-ig__item--banner { grid-area: mid-top; }
+.social-ig__item--box { grid-area: mid-bottom; }
+.social-ig__item--top { grid-area: right-top; }
+.social-ig__item--split { grid-area: right-bottom; }
+
+.social-ig__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.social-ig__caption {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #ffffff;
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: clamp(15px, 1.35vw, 20px);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.social-ig__caption > span {
+  display: block;
+}
+
+.social-ig__caption-rule {
+  display: block;
+  width: 42px;
+  height: 1px;
+  background: #ffffff;
+}
+
+.social-ig__item--tall .social-ig__caption {
+  left: 16px;
+  bottom: 16px;
+}
+
+.social-ig__item--banner .social-ig__caption {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14px 16px 16px;
+  background: rgba(20, 16, 14, 0.72);
+}
+
+.social-ig__item--box .social-ig__caption {
+  left: 0;
+  bottom: 0;
+  padding: 14px 16px 16px;
+  background: rgba(20, 16, 14, 0.78);
+}
+
+.social-ig__item--top .social-ig__caption {
+  top: 14px;
+  left: 14px;
+  max-width: 9em;
+  text-shadow: 0 1px 10px rgba(20, 12, 8, 0.45);
+}
+
+.social-ig__item--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.social-ig__item--split img {
+  grid-column: 2;
+}
+
+.social-ig__item--split .social-ig__caption {
+  position: relative;
+  grid-column: 1;
+  justify-content: center;
+  padding: 18px 16px;
+  background: #5f5348;
+  color: #ffffff;
+}
+
+.social-yt {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 12px;
+}
+
+.social-yt__feature,
+.social-yt__clip {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  min-height: 220px;
+  background: #efe8de;
+  color: #faf9f6;
+}
+
+.social-yt__feature {
+  min-height: 460px;
+}
+
+.social-yt__side {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+}
+
+.social-yt__feature img,
+.social-yt__clip img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.social-yt__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  border: 1.5px solid #ffffff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.social-yt__play::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 0 8px 14px;
+  border-color: transparent transparent transparent #ffffff;
+  transform: translate(-50%, -50%);
+}
+
+.social-yt__play.is-small {
+  width: 44px;
+  height: 44px;
+}
+
+.social-yt__copy {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  right: 72px;
+}
+
+.social-yt__copy strong {
+  display: block;
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: clamp(18px, 2vw, 32px);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  text-shadow: 0 1px 12px rgba(20, 12, 8, 0.45);
+}
+
+.social-yt__clip .social-yt__copy strong {
+  font-size: clamp(16px, 1.3vw, 20px);
+}
+
+.social-yt__copy em {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  font-style: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.social-yt__time {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.social-reviews {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.7fr) repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.social-reviews__score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  color: var(--sv-title);
+}
+
+.social-reviews__rating {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin: 0;
+  line-height: 1;
+}
+
+.social-reviews__value {
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: clamp(48px, 5.2vw, 64px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.social-reviews__outof {
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 400;
+  color: var(--sv-muted);
+}
+
+.social-reviews__score .social-stars {
+  font-size: clamp(20px, 2.2vw, 28px);
+  letter-spacing: 0.14em;
+}
+
+.social-reviews__label {
+  margin: 2px 0 0;
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: clamp(18px, 1.6vw, 22px);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.social-reviews__tagline {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  color: var(--sv-muted);
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.social-stars {
+  color: var(--sv-star);
+  letter-spacing: 0.12em;
+  font-size: 13px;
+}
+
+.social-review {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 24px 22px 28px;
+  background: #ffffff;
+  color: var(--sv-title);
+}
+
+.social-review p {
+  margin: 0;
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.social-review footer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: auto;
+}
+
+.social-review cite {
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.social-review footer span {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--sv-muted);
+}
+
+.social-g {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 18px;
+  height: 18px;
+}
+
+.social-studio {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social-studio img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  margin-bottom: 14px;
+  background: #efe8de;
+}
+
+.social-studio span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.social-studio h3 {
+  margin: 0 0 12px;
+  color: var(--sv-title);
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: clamp(18px, 1.5vw, 22px);
+  font-weight: 500;
+}
+
+.social-studio time {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sv-muted);
+}
+
+.socials-close {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  padding-top: 12px;
+}
+
+.socials-close span {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.socials-close p {
+  margin: 6px 0 0;
+  color: var(--sv-title);
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: clamp(32px, 4.2vw, 56px);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.socials-close__rule {
+  flex: 1;
+  margin-bottom: 14px;
+}
+
+.socials-close nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 22px;
+  margin-bottom: 10px;
+}
+
+.socials-close nav a {
+  color: var(--sv-title);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1000px) {
+  .social-ig {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+    grid-template-areas:
+      "tall tall"
+      "mid-top right-top"
+      "mid-bottom right-bottom";
+  }
+
+  .social-yt,
+  .social-reviews,
+  .social-studio {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+  }
+
+  .social-ig__item--tall {
+    min-height: 320px;
+  }
+
+  .social-yt__feature {
+    min-height: 320px;
+    grid-column: 1 / -1;
+  }
+
+  .social-yt__side {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+  }
+
+  .social-reviews__score {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 700px) {
+  .socials-page {
+    padding: 112px 22px 64px;
+  }
+
+  .social-ig {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "tall"
+      "mid-top"
+      "mid-bottom"
+      "right-top"
+      "right-bottom";
+  }
+
+  .social-yt,
+  .social-reviews,
+  .social-studio,
+  .social-yt__side {
+    grid-template-columns: 1fr;
+  }
+
+  .social-ig__item,
+  .social-yt__feature,
+  .social-yt__clip {
+    min-height: 220px;
+  }
+
+  .socials-close {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .socials-close__rule {
+    width: 100%;
+    margin: 8px 0;
+  }
+
+  .socials-close p {
+    white-space: normal;
+  }
+}

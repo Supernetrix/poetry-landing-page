@@ -2,26 +2,9 @@ import HeroSection from "./components/HeroSection";
 import StatsSnapshot from "./components/StatsSnapshot";
 import ConceptToReality from "./components/ConceptToReality";
 import QuoteSplit from "./components/QuoteSplit";
-import EditorialPortfolioSection from "./components/EditorialPortfolioSection";
-import AboutSection from "./components/AboutSection";
-import JournalSection from "./components/JournalSection";
 import FooterSection from "./components/FooterSection";
-import { client } from "@/sanity/lib/client";
-import {
-  PROJECTS_QUERY,
-  ARTICLES_QUERY,
-  CERTIFICATES_QUERY,
-} from "@/sanity/lib/queries";
 
-const fetchOptions = { next: { revalidate: 60 } };
-
-export default async function Home() {
-  const [projects, articles, certificates] = await Promise.all([
-    client.fetch(PROJECTS_QUERY, {}, fetchOptions),
-    client.fetch(ARTICLES_QUERY, {}, fetchOptions),
-    client.fetch(CERTIFICATES_QUERY, {}, fetchOptions),
-  ]);
-
+export default function Home() {
   return (
     <main>
       <HeroSection />
@@ -57,9 +40,6 @@ export default async function Home() {
         imageAlt="Annotated architectural elevation of a residence"
         lines={["Meticulous", "Planning for", "Every Project"]}
       />
-      <EditorialPortfolioSection projects={projects.slice(0, 6)} />
-      <AboutSection certificates={certificates} />
-      <JournalSection articles={articles} />
       <FooterSection />
     </main>
   );

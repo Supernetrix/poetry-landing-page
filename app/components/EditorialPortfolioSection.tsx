@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import type { FormEvent } from "react";
 import { useMemo, useState } from "react";
 import type { SanityImageSource } from "@sanity/image-url";
 import { urlFor } from "@/sanity/lib/image";
@@ -34,21 +32,6 @@ interface ProjectImage {
   location: string;
   url: string;
 }
-
-const PRINCIPLES = [
-  {
-    quote:
-      "We begin with the way you want to live, then shape the architecture around it. Every decision is explained before it becomes part of the build.",
-    title: "Design practice",
-    source: "Poetry Constructions",
-  },
-  {
-    quote:
-      "Design and execution stay under one roof, giving every project one accountable team from the first brief through final handover.",
-    title: "Delivery practice",
-    source: "Poetry Constructions",
-  },
-];
 
 function imageUrl(source?: SanityImageSource): string | null {
   if (!source) return null;
@@ -118,16 +101,6 @@ export default function EditorialPortfolioSection({ projects }: { projects: Port
     setActiveImage((current) => (current + direction + projectImages.length) % projectImages.length);
   };
 
-  const handleEnquiry = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const name = String(data.get("name") ?? "").trim();
-    const phone = String(data.get("phone") ?? "").trim();
-    const subject = encodeURIComponent(`Project enquiry from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nPhone: ${phone}\n\nI would like to discuss a project with Poetry Constructions.`);
-    window.location.href = `mailto:hello@poetryconstructions.com?subject=${subject}&body=${body}`;
-  };
-
   return (
     <section className="editorial-portfolio" aria-labelledby="editorial-portfolio-title">
       <div className="editorial-portfolio__heading-row">
@@ -163,54 +136,6 @@ export default function EditorialPortfolioSection({ projects }: { projects: Port
             </div>
           </article>
         ))}
-      </div>
-
-      <div className="editorial-portfolio__enquiry">
-        <div className="editorial-portfolio__enquiry-title">
-          <span>INSPIRE</span>
-          <h3>LET&apos;S<br />BRING YOUR<br />VISION TO<br />LIFE</h3>
-        </div>
-
-        <div className="editorial-portfolio__enquiry-form-wrap">
-          <p>Our architects will help you shape a considered space around how you live, what you value, and what the site makes possible.</p>
-          <form onSubmit={handleEnquiry} className="editorial-portfolio__form">
-            <label>
-              <span>YOUR NAME</span>
-              <input name="name" type="text" autoComplete="name" required aria-label="Your name" />
-            </label>
-            <label>
-              <span>YOUR PHONE</span>
-              <input name="phone" type="tel" autoComplete="tel" required aria-label="Your phone" />
-            </label>
-            <button type="submit" aria-label="Start a project enquiry">
-              <ArrowIcon direction="right" />
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div className="editorial-portfolio__principles-heading">
-        <h3>WHAT GUIDES<br />OUR WORK</h3>
-        <div className="editorial-portfolio__controls" aria-hidden="true">
-          <span><ArrowIcon direction="left" /></span>
-          <span><ArrowIcon direction="right" /></span>
-        </div>
-      </div>
-
-      <div className="editorial-portfolio__principles">
-        {PRINCIPLES.map((principle) => (
-          <article key={principle.title}>
-            <div className="editorial-portfolio__quote-mark" aria-hidden="true">“</div>
-            <div className="editorial-portfolio__principle-copy">
-              <blockquote>{principle.quote}</blockquote>
-              <p><strong>{principle.title}</strong><span>{principle.source}</span></p>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      <div className="editorial-portfolio__portfolio-link">
-        <Link href="/estates">VIEW ENTIRE PORTFOLIO <span aria-hidden="true">→</span></Link>
       </div>
     </section>
   );

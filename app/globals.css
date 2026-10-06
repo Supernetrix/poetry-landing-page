@@ -229,9 +229,9 @@ a { text-decoration: none; }
 .black-hero__nav-link {
   flex: 0 1 auto;
   color: var(--bh-nav-text);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.2em;
   line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
@@ -264,15 +264,16 @@ a { text-decoration: none; }
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  --hero-title-size: clamp(52px, 9.2vw, 126px);
 }
 
 .black-hero__title {
   margin: 0;
   padding: 0;
-  font-size: clamp(64px, 11.5vw, 168px);
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.02em;
+  font-size: var(--hero-title-size);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   color: #ffffff;
   width: max-content;
@@ -281,16 +282,17 @@ a { text-decoration: none; }
 .black-hero__subtitle {
   display: block;
   width: max-content;
-  margin: clamp(8px, 1.2vh, 14px) 0 0;
+  max-width: calc(var(--hero-title-size) * 2.85);
+  margin: calc(var(--hero-title-size) * 0.07) 0 0;
   padding: 0;
-  font-size: clamp(11px, 1.1vw, 15px);
-  font-weight: 300;
-  letter-spacing: 0.42em;
+  font-size: calc(var(--hero-title-size) * 0.26);
+  font-weight: 600;
+  letter-spacing: 0.48em;
   line-height: 1;
   text-transform: uppercase;
   color: #ffffff;
-  margin-left: calc(clamp(64px, 11.5vw, 168px) * 0.055);
-  margin-right: -0.42em;
+  margin-left: 0;
+  margin-right: -0.48em;
 }
 
 .black-hero__cta {
@@ -355,8 +357,8 @@ a { text-decoration: none; }
   }
 
   .black-hero__nav-link {
-    font-size: 11px;
-    letter-spacing: 0.14em;
+    font-size: 10px;
+    letter-spacing: 0.16em;
   }
 }
 
@@ -452,14 +454,17 @@ a { text-decoration: none; }
     gap: 12px;
   }
 
+  .black-hero__brand {
+    --hero-title-size: clamp(46px, 13.5vw, 88px);
+  }
+
   .black-hero__title {
-    font-size: clamp(64px, 16vw, 96px);
-    line-height: 0.9;
+    line-height: 0.88;
   }
 
   .black-hero__subtitle {
-    font-size: 12px;
     letter-spacing: 0.42em;
+    margin-right: -0.42em;
   }
 
   .black-hero__cta {

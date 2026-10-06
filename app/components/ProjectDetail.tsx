@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { SanityImageSource } from "@sanity/image-url";
 import { urlFor } from "@/sanity/lib/image";
 import "./ProjectDetail.css";
+import ProjectFloorPlansRequest from "./ProjectFloorPlansRequest";
 
 export type ProjectDetailData = {
   name: string;
@@ -162,9 +163,14 @@ export default function ProjectDetail({ project }: { project: ProjectDetailData 
             {craftParagraphs.map((paragraph) => (
               <p key={paragraph.slice(0, 48)}>{paragraph}</p>
             ))}
+            <ProjectFloorPlansRequest projectName={project.name} inline />
           </div>
         </section>
       )}
+
+      {!craftParagraphs.length && !craftImage ? (
+        <ProjectFloorPlansRequest projectName={project.name} />
+      ) : null}
 
       {featuredPhoto ? (
         <section className="project-detail__gallery">

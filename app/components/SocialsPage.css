@@ -456,13 +456,72 @@
   list-style: none;
 }
 
-.social-studio img {
-  display: block;
+.social-studio__item {
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.social-studio__item:hover {
+  transform: translateY(-2px);
+}
+
+.social-studio__media {
+  position: relative;
   width: 100%;
   aspect-ratio: 1;
-  object-fit: cover;
   margin-bottom: 14px;
+  overflow: hidden;
   background: #efe8de;
+}
+
+.social-studio__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  margin-bottom: 0;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.social-studio__item:hover .social-studio__media img,
+.social-studio__item:focus-visible .social-studio__media img {
+  transform: scale(1.04);
+}
+
+.social-studio__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(22, 9, 4, 0.62);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  padding: 16px;
+  text-align: center;
+  z-index: 2;
+}
+
+.social-studio__item:hover .social-studio__overlay,
+.social-studio__item:focus-visible .social-studio__overlay,
+.social-studio__item.is-selected .social-studio__overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.social-studio__dev-text {
+  font-family: var(--font-barlow), sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+  color: #f7f3ec;
 }
 
 .social-studio span {
@@ -480,6 +539,11 @@
   font-family: var(--font-quote), "Playfair Display", Georgia, serif;
   font-size: clamp(18px, 1.5vw, 22px);
   font-weight: 500;
+  transition: color 0.25s ease;
+}
+
+.social-studio__item:hover h3 {
+  color: var(--c-btn, #933109);
 }
 
 .social-studio time {
@@ -487,6 +551,170 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--sv-muted);
+}
+
+/* Modal backdrop & dialog */
+.social-studio-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(18, 6, 2, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: modalFadeIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.social-studio-modal {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  background: #fbf9f5;
+  color: var(--sv-text, #3c2a21);
+  border: 1px solid rgba(62, 21, 8, 0.14);
+  box-shadow: 0 24px 64px rgba(20, 8, 4, 0.3);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: modalSlideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.social-studio-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(62, 21, 8, 0.16);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--sv-text, #3c2a21);
+  transition: all 0.2s ease;
+}
+
+.social-studio-modal__close:hover {
+  background: rgba(62, 21, 8, 0.08);
+  transform: rotate(90deg);
+}
+
+.social-studio-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 36px;
+}
+
+.social-studio-modal__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-barlow), sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--sv-title, #3e1508);
+}
+
+.social-studio-modal__category {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--sv-muted, #8a7b70);
+}
+
+.social-studio-modal__image-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #ece8df;
+}
+
+.social-studio-modal__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.social-studio-modal__stamp {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(20, 8, 4, 0.72);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.social-studio-modal__body h3 {
+  margin: 0 0 6px;
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--sv-title, #2b1f19);
+}
+
+.social-studio-modal__body time {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--sv-muted, #8a7b70);
+  margin-bottom: 14px;
+}
+
+.social-studio-modal__body p {
+  margin: 0 0 20px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(62, 21, 8, 0.76);
+}
+
+.social-studio-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.social-studio-modal__btn {
+  background: var(--c-btn, #933109);
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  font-family: var(--font-barlow), sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.social-studio-modal__btn:hover {
+  background: var(--c-btn-hover, #7A2807);
 }
 
 .socials-close {

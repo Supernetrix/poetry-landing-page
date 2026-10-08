@@ -253,7 +253,7 @@ export default function JournalSection({ articles: sanityArticles }: { articles?
                 transition: "opacity 0.5s cubic-bezier(0.22,1,0.36,1), filter 0.5s cubic-bezier(0.22,1,0.36,1)",
                 pointerEvents: isActive ? "auto" : "none",
               }}
-              onClick={isActive ? () => setSelected(art) : undefined}
+              // onClick={isActive ? () => setSelected(art) : undefined}
             >
               {/* Image tile layers */}
               {isImage && (
@@ -298,6 +298,7 @@ export default function JournalSection({ articles: sanityArticles }: { articles?
                   {!isStrip && !isMobile && <div style={{ fontSize: "9px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", color: `rgba(${fg},0.26)`, position: "relative", zIndex: 2 }}>{art.date}</div>}
                 </div>
               )}
+              <div className="dev-overlay"><span>UNDER DEVELOPMENT</span></div>
             </div>
           );
         })}

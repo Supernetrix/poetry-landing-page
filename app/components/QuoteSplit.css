@@ -27,7 +27,7 @@
   grid-area: image;
   display: block;
   width: 100%;
-  height: min(78vh, 820px);
+  height: 100vh;
   max-width: none;
   object-fit: cover;
   object-position: center;
@@ -35,7 +35,7 @@
 
 .quote-split__copy {
   grid-area: copy;
-  height: min(78vh, 820px);
+  height: 100vh;
   background: #ffffff;
 }
 

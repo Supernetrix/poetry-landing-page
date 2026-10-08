@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useMobile } from "../hooks/useMobile";
 
 const NAV_LINKS = [
@@ -17,6 +17,8 @@ const NAV_LINKS = [
 export default function SiteHeader() {
   const isMobile = useMobile(768);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -25,10 +27,36 @@ export default function SiteHeader() {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (menuOpen) return;
+
+      if (currentScrollY < 50) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current + 5) {
+        // Scrolling down (added a 5px threshold to prevent jitter)
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY.current - 5) {
+        // Scrolling up
+        setIsVisible(true);
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    // Initialize
+    lastScrollY.current = window.scrollY;
+    
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [menuOpen]);
+
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="black-hero__header">
+    <header className={`black-hero__header${!isVisible ? " black-hero__header--hidden" : ""}`}>
       {!isMobile ? (
         <nav className="black-hero__nav" aria-label="Primary">
           {NAV_LINKS.map((link) => (

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { SanityImageSource } from "@sanity/image-url";
@@ -82,7 +85,7 @@ function galleryUrls(project: ProjectDetailData): string[] {
     const hero = imageUrl(project.image);
     if (hero) urls.push(hero);
   }
-  return urls.slice(0, 7);
+  return urls;
 }
 
 export default function ProjectDetail({ project }: { project: ProjectDetailData }) {
@@ -97,9 +100,53 @@ export default function ProjectDetail({ project }: { project: ProjectDetailData 
     .map((part) => part.trim())
     .filter(Boolean);
   const photos = galleryUrls(project);
-  const featuredPhoto = photos[0];
-  const thumbPhotos = photos.slice(1, 7);
+  const chunks: string[][] = [];
+  if (photos.length > 0) {
+    chunks.push(photos.slice(0, 5));
+    for (let i = 5; i < photos.length; i += 8) {
+      chunks.push(photos.slice(i, i + 8));
+    }
+  }
+
+  const [currentChunk, setCurrentChunk] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const tourId = youtubeId(project.tourVideoUrl);
+
+  const prevChunk = useCallback(() => {
+    if (chunks.length < 2) return;
+    setCurrentChunk((prev) => (prev - 1 + chunks.length) % chunks.length);
+  }, [chunks.length]);
+
+  const nextChunk = useCallback(() => {
+    if (chunks.length < 2) return;
+    setCurrentChunk((prev) => (prev + 1) % chunks.length);
+  }, [chunks.length]);
+
+  const prevLightbox = useCallback(() => {
+    if (photos.length < 2) return;
+    setLightboxIndex((prev) => (prev !== null ? (prev - 1 + photos.length) % photos.length : null));
+  }, [photos.length]);
+
+  const nextLightbox = useCallback(() => {
+    if (photos.length < 2) return;
+    setLightboxIndex((prev) => (prev !== null ? (prev + 1) % photos.length : null));
+  }, [photos.length]);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxIndex(null);
+      if (e.key === "ArrowLeft") prevLightbox();
+      if (e.key === "ArrowRight") nextLightbox();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [lightboxIndex, prevLightbox, nextLightbox]);
 
   return (
     <article className="project-detail">
@@ -172,25 +219,198 @@ export default function ProjectDetail({ project }: { project: ProjectDetailData 
         <ProjectFloorPlansRequest projectName={project.name} />
       ) : null}
 
-      {featuredPhoto ? (
-        <section className="project-detail__gallery">
-          <h2>Image Gallery</h2>
-          <div className="project-detail__gallery-grid">
-            <div className="project-detail__gallery-feature">
-              <Image src={featuredPhoto} alt="" fill sizes="50vw" className="project-detail__photo" />
-            </div>
-            {thumbPhotos.length > 0 ? (
-              <div className="project-detail__gallery-thumbs">
-                {thumbPhotos.map((src) => (
-                  <div key={src} className="project-detail__gallery-thumb">
-                    <Image src={src} alt="" fill sizes="25vw" className="project-detail__photo" />
-                  </div>
-                ))}
+      {photos.length > 0 ? (
+        <section className="project-detail__gallery" aria-label="Project Image Gallery">
+          <div className="project-detail__gallery-header">
+            <h2>Image Gallery</h2>
+            {chunks.length > 1 && (
+              <div className="project-detail__gallery-controls">
+                <button
+                  type="button"
+                  className="project-detail__gallery-arrow"
+                  onClick={prevChunk}
+                  aria-label="Previous images"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  className="project-detail__gallery-arrow"
+                  onClick={nextChunk}
+                  aria-label="Next images"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
               </div>
-            ) : null}
+            )}
+          </div>
+
+          <div className="project-detail__gallery-slider">
+            <div
+              className="project-detail__gallery-track"
+              style={{ transform: `translateX(-${currentChunk * 100}%)` }}
+            >
+              {chunks.map((chunk, chunkIndex) => (
+                <div 
+                  key={chunkIndex} 
+                  className={`project-detail__gallery-grid ${chunkIndex > 0 ? "project-detail__gallery-grid--regular" : ""}`}
+                >
+                  {chunkIndex === 0 ? (
+                    <>
+                      <div
+                        className="project-detail__gallery-feature"
+                        onClick={() => setLightboxIndex(0)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Open full size image"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            setLightboxIndex(0);
+                          }
+                        }}
+                      >
+                        <Image
+                          src={chunk[0]}
+                          alt={`${project.name} gallery feature`}
+                          fill
+                          sizes="(max-width: 900px) 100vw, 55vw"
+                          className="project-detail__photo"
+                        />
+                      </div>
+
+                      {chunk.length > 1 ? (
+                        <div className="project-detail__gallery-thumbs">
+                          {chunk.slice(1).map((photoSrc, i) => {
+                            const absIndex = 1 + i;
+                            return (
+                              <div
+                                key={`${photoSrc}-${absIndex}`}
+                                className="project-detail__gallery-thumb"
+                                onClick={() => setLightboxIndex(absIndex)}
+                                role="button"
+                                tabIndex={0}
+                                aria-label={`Open photo ${absIndex + 1}`}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter" || e.key === " ") {
+                                    e.preventDefault();
+                                    setLightboxIndex(absIndex);
+                                  }
+                                }}
+                              >
+                                <Image
+                                  src={photoSrc}
+                                  alt={`${project.name} gallery thumbnail ${absIndex}`}
+                                  fill
+                                  sizes="(max-width: 900px) 50vw, 25vw"
+                                  className="project-detail__photo"
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : null}
+                    </>
+                  ) : (
+                    chunk.map((photoSrc, i) => {
+                      const absIndex = 5 + (chunkIndex - 1) * 8 + i;
+                      return (
+                        <div
+                          key={`${photoSrc}-${absIndex}`}
+                          className="project-detail__gallery-thumb project-detail__gallery-thumb--regular"
+                          onClick={() => setLightboxIndex(absIndex)}
+                          role="button"
+                          tabIndex={0}
+                          aria-label={`Open photo ${absIndex + 1}`}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              setLightboxIndex(absIndex);
+                            }
+                          }}
+                        >
+                          <Image
+                            src={photoSrc}
+                            alt={`${project.name} gallery thumbnail ${absIndex}`}
+                            fill
+                            sizes="(max-width: 900px) 25vw, 25vw"
+                            className="project-detail__photo"
+                          />
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       ) : null}
+
+      {lightboxIndex !== null && (
+        <div
+          className="project-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image Preview"
+          onClick={() => setLightboxIndex(null)}
+        >
+          <div className="project-lightbox__topbar" onClick={(e) => e.stopPropagation()}>
+            <span className="project-lightbox__title">
+              {project.name} · {String(lightboxIndex + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
+            </span>
+            <button
+              type="button"
+              className="project-lightbox__close"
+              onClick={() => setLightboxIndex(null)}
+              aria-label="Close image popup"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className="project-lightbox__content" onClick={(e) => e.stopPropagation()}>
+            {photos.length > 1 && (
+              <button
+                type="button"
+                className="project-lightbox__nav project-lightbox__nav--prev"
+                onClick={prevLightbox}
+                aria-label="Previous photo"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
+
+            <div className="project-lightbox__media">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={photos[lightboxIndex]}
+                alt={`${project.name} photo ${lightboxIndex + 1}`}
+                className="project-lightbox__img"
+              />
+            </div>
+
+            {photos.length > 1 && (
+              <button
+                type="button"
+                className="project-lightbox__nav project-lightbox__nav--next"
+                onClick={nextLightbox}
+                aria-label="Next photo"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+            )}
+          </div>
+        </div>
+      )}
 
       {tourId ? (
         <section className="project-detail__tour">

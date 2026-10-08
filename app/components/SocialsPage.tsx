@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import "./SocialsPage.css";
 
@@ -82,11 +85,13 @@ function Band({
   href,
   action,
   extra,
+  onClick,
 }: {
   label: string;
   href: string;
   action: string;
   extra?: string;
+  onClick?: (e: React.MouseEvent) => void;
 }) {
   return (
     <div className="social-band">
@@ -96,7 +101,7 @@ function Band({
       </div>
       <div className="social-band__meta">
         {extra ? <span>{extra}</span> : null}
-        <Link href={href} className="social-band__action">
+        <Link href={href} className="social-band__action" onClick={onClick}>
           <strong>{action}</strong> <span aria-hidden="true">→</span>
         </Link>
       </div>
@@ -107,6 +112,21 @@ function Band({
 export default function SocialsPage() {
   const featured = VIDEOS[0];
   const sideVideos = VIDEOS.slice(1);
+  const [activeItem, setActiveItem] = useState<(typeof STUDIO)[number] | null>(null);
+
+  useEffect(() => {
+    if (!activeItem) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveItem(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [activeItem]);
 
   return (
     <article className="socials-page">
@@ -208,15 +228,41 @@ export default function SocialsPage() {
       </section>
 
       <section className="socials-block" aria-labelledby="social-studio-title">
-        <Band label="From the studio" href="#" action="More updates" />
+        <Band
+          label="From the studio"
+          href="#studio"
+          action="More updates"
+          onClick={(e) => {
+            e.preventDefault();
+            setActiveItem(STUDIO[0]);
+          }}
+        />
         <h2 id="social-studio-title" className="sr-only">
           From the studio
         </h2>
         <ul className="social-studio">
           {STUDIO.map((item) => (
-            <li key={item.title}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={item.src} alt="" />
+            <li
+              key={item.title}
+              className={`social-studio__item ${activeItem?.title === item.title ? "is-selected" : ""}`}
+              onClick={() => setActiveItem(item)}
+              tabIndex={0}
+              role="button"
+              aria-label={`${item.title} - Under Development`}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setActiveItem(item);
+                }
+              }}
+            >
+              <div className="social-studio__media">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={item.src} alt={item.title} />
+                <div className="social-studio__overlay">
+                  <span className="social-studio__dev-text">UNDER DEVELOPMENT</span>
+                </div>
+              </div>
               <span>{item.category}</span>
               <h3>{item.title}</h3>
               <time>{item.date}</time>
@@ -224,6 +270,62 @@ export default function SocialsPage() {
           ))}
         </ul>
       </section>
+
+      {activeItem && (
+        <div
+          className="social-studio-modal__backdrop"
+          onClick={() => setActiveItem(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="studio-modal-title"
+        >
+          <div
+            className="social-studio-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="social-studio-modal__close"
+              onClick={() => setActiveItem(null)}
+              aria-label="Close modal"
+            >
+              ✕
+            </button>
+
+            <div className="social-studio-modal__header">
+              <div className="social-studio-modal__status">
+                <span>UNDER DEVELOPMENT</span>
+              </div>
+              <span className="social-studio-modal__category">{activeItem.category}</span>
+            </div>
+
+            <div className="social-studio-modal__image-wrap">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={activeItem.src} alt={activeItem.title} />
+              <div className="social-studio-modal__stamp">
+                <span>IN PROGRESS</span>
+              </div>
+            </div>
+
+            <div className="social-studio-modal__body">
+              <h3 id="studio-modal-title">{activeItem.title}</h3>
+              <time>{activeItem.date}</time>
+              <p>
+                This studio journal story is currently under development. Our team is curating project essays, on-site photography, and material explorations for this feature.
+              </p>
+              <div className="social-studio-modal__actions">
+                <button
+                  type="button"
+                  className="social-studio-modal__btn"
+                  onClick={() => setActiveItem(null)}
+                >
+                  CLOSE
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <footer className="socials-close">
         <div>

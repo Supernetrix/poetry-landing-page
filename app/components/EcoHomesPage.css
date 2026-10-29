@@ -1,0 +1,147 @@
+.eco-homes-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #F6F1E8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(88px, 13vh, 120px) 24px clamp(48px, 8vh, 72px);
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.eco-homes__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.eco-homes__artwork-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000000 78%, transparent 100%);
+}
+
+.eco-homes__artwork {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.eco-homes__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 14px;
+}
+
+.eco-homes__eyebrow {
+  font-family: var(--font-barlow), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #B66534;
+  margin-bottom: 18px;
+  line-height: 1;
+}
+
+.eco-homes__title {
+  font-family: var(--font-quote), "Playfair Display", Georgia, serif;
+  font-size: clamp(30px, 3.8vw, 46px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: #382515;
+  margin: 0 0 12px;
+  text-align: center;
+}
+
+.eco-homes__subtitle {
+  font-family: var(--font-barlow), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: #887E71;
+  margin: 0 0 24px;
+  text-align: center;
+  max-width: 480px;
+}
+
+.eco-homes__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 38px;
+  padding: 0 22px;
+  border: 1px solid #C89673;
+  border-radius: 0;
+  background: transparent;
+  color: #B66534;
+  font-family: var(--font-barlow), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.eco-homes__btn-arrow {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.25s ease;
+}
+
+.eco-homes__btn:hover {
+  background: #B66534;
+  border-color: #B66534;
+  color: #FFFFFF;
+}
+
+.eco-homes__btn:hover .eco-homes__btn-arrow {
+  transform: translateX(-3px);
+}
+
+@media (max-width: 640px) {
+  .eco-homes-page {
+    padding-top: 100px;
+    padding-bottom: 40px;
+  }
+
+  .eco-homes__artwork-wrap {
+    max-width: 90vw;
+  }
+
+  .eco-homes__title {
+    font-size: clamp(26px, 7vw, 34px);
+  }
+
+  .eco-homes__subtitle {
+    font-size: 13px;
+    padding: 0 12px;
+  }
+
+  .eco-homes__btn {
+    height: 36px;
+    padding: 0 18px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+}

@@ -3,7 +3,8 @@ import { project } from './project'
 import { article } from './article'
 import { jobOpening } from './jobOpening'
 import { certificate } from './certificate'
+import { instagramReel } from './instagramReel'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [project, article, jobOpening, certificate],
+  types: [project, article, jobOpening, certificate, instagramReel],
 }

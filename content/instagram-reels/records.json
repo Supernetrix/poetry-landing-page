@@ -1,0 +1,63 @@
+{
+  "projectId": "z6qms9wh",
+  "dataset": "production",
+  "retrievedOn": "2026-10-29",
+  "sourceProfile": {
+    "url": "https://www.instagram.com/poetry_constructions/",
+    "name": "POETRY CONSTRUCTIONS",
+    "bio": "Bespoke Home Designs | Turnkey Home Construction | Villas | Bungalows | Farm Houses | Planning, Design & Construction",
+    "website": "https://poetryconstructions.com/get-in-touch"
+  },
+  "reels": [
+    {
+      "_id": "instagram-reel-DCAYF5qsGHr",
+      "title": "Quiet moments at home",
+      "caption": "#bengaluru #bangalore #poetryconstructions #homeconstruction #trending #dreamhome #homedesign #reels",
+      "reelUrl": "https://www.instagram.com/reel/DCAYF5qsGHr/",
+      "sourceDate": "2024-11-05",
+      "thumbnailFile": "thumbnails/DCAYF5qsGHr.jpg",
+      "layout": "tall",
+      "order": 1
+    },
+    {
+      "_id": "instagram-reel-DBxtYEcoCTS",
+      "title": "Happy Diwali",
+      "caption": "",
+      "reelUrl": "https://www.instagram.com/reel/DBxtYEcoCTS/",
+      "sourceDate": "2024-10-30",
+      "thumbnailFile": "thumbnails/DBxtYEcoCTS.jpg",
+      "layout": "banner",
+      "order": 2
+    },
+    {
+      "_id": "instagram-reel-C-5e1f4v4hg",
+      "title": "Small details, warm spaces",
+      "caption": "",
+      "reelUrl": "https://www.instagram.com/reel/C-5e1f4v4hg/",
+      "sourceDate": "2024-08-20",
+      "thumbnailFile": "thumbnails/C-5e1f4v4hg.jpg",
+      "layout": "box",
+      "order": 3
+    },
+    {
+      "_id": "instagram-reel-C-atwshsd0o",
+      "title": "Art in the everyday",
+      "caption": "",
+      "reelUrl": "https://www.instagram.com/reel/C-atwshsd0o/",
+      "sourceDate": "2024-08-08",
+      "thumbnailFile": "thumbnails/C-atwshsd0o.jpg",
+      "layout": "top",
+      "order": 4
+    },
+    {
+      "_id": "instagram-reel-C-Kq4KDsr2b",
+      "title": "Blue kitchen details",
+      "caption": "#kitchen #kitchendesign #villa #dreamhome #architecture #bengaluru #whitefield #interiordesign #interior",
+      "reelUrl": "https://www.instagram.com/reel/C-Kq4KDsr2b/",
+      "sourceDate": "2024-08-02",
+      "thumbnailFile": "thumbnails/C-Kq4KDsr2b.jpg",
+      "layout": "split",
+      "order": 5
+    }
+  ]
+}

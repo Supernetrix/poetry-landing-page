@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useMobile } from "../hooks/useMobile";
+import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
   { label: "HOME", href: "/" },
@@ -15,6 +16,7 @@ const NAV_LINKS = [
 ] as const;
 
 export default function SiteHeader() {
+  const pathname = usePathname();
   const isMobile = useMobile(768);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -54,6 +56,8 @@ export default function SiteHeader() {
   }, [menuOpen]);
 
   const closeMenu = () => setMenuOpen(false);
+
+  if (pathname === "/studio" || pathname.startsWith("/studio/")) return null;
 
   return (
     <header className={`black-hero__header${!isVisible ? " black-hero__header--hidden" : ""}`}>

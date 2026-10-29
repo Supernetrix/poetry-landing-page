@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "tsx --test tests/*.test.ts",
+    "cms:build": "sanity build",
+    "cms:deploy": "sanity deploy --schema-required",
+    "cms:instagram:check": "tsx scripts/import-instagram-reels.ts --check",
+    "cms:instagram:import": "tsx scripts/import-instagram-reels.ts"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",
@@ -16,6 +21,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "sanity": "^5.31.1",
+    "saxes": "^6.0.0",
     "styled-components": "^6.4.3"
   },
   "devDependencies": {
@@ -26,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
+    "tsx": "^4.23.0",
     "typescript": "^5"
   }
 }

@@ -5,6 +5,7 @@ import { useMobile } from "../hooks/useMobile";
 import { urlFor } from "@/sanity/lib/image";
 import type { SanityImageSource } from "@sanity/image-url";
 import Link from "next/link";
+import { getYouTubeId } from "../lib/social";
 
 type GalleryItem =
   | { type: "image"; url: string; key: string }
@@ -39,11 +40,6 @@ interface SanityProject {
   note?: string;
   image?: SanityImageSource;
   gallery?: SanityGalleryItem[];
-}
-
-function getYouTubeId(url: string): string {
-  const match = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
-  return match ? match[1] : "";
 }
 
 const PROJECT_LAYOUT = [
@@ -179,7 +175,7 @@ function mergeProjects(sanityProjects: SanityProject[]): Project[] {
     const gallery: GalleryItem[] = [];
     for (const g of p.gallery ?? []) {
       if (g._type === "youtubeVideo") {
-        if (g.url) gallery.push({ type: "video", key: g._key, url: g.url, caption: g.caption });
+        if (getYouTubeId(g.url)) gallery.push({ type: "video", key: g._key, url: g.url, caption: g.caption });
       } else {
         const src = g as SanityImageSource & { _key: string; asset?: { _ref?: string } };
         if (src.asset?._ref) gallery.push({ type: "image", key: g._key, url: urlFor(g).width(900).url() });
@@ -635,6 +631,8 @@ export default function PortfolioGrid({ projects: sanityProjects, isHomePage = f
                   src={`https://www.youtube.com/embed/${getYouTubeId(item.url)}?autoplay=1&rel=0`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
+                  title={item.caption || `${selected.name} video`}
+                  referrerPolicy="strict-origin-when-cross-origin"
                   style={{ width: "100%", height: "100%", border: "none", display: "block" }}
                 />
               ) : (

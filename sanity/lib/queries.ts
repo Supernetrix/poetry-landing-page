@@ -45,3 +45,11 @@ export const JOBS_QUERY = defineQuery(
 export const CERTIFICATES_QUERY = defineQuery(
   `*[_type == "certificate"] | order(order asc){ _id, name, subtitle, year, type, image }`
 )
+
+export const INSTAGRAM_REELS_QUERY = defineQuery(
+  `*[_type == "instagramReel"] | order(order asc, _createdAt desc){
+    _id, title, caption, reelUrl, layout,
+    "videoUrl": videoFile.asset->url,
+    "thumbnailUrl": thumbnail.asset->url
+  }`
+)

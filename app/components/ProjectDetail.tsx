@@ -7,6 +7,7 @@ import type { SanityImageSource } from "@sanity/image-url";
 import { urlFor } from "@/sanity/lib/image";
 import "./ProjectDetail.css";
 import ProjectFloorPlansRequest from "./ProjectFloorPlansRequest";
+import { getYouTubeId } from "../lib/social";
 
 export type ProjectDetailData = {
   name: string;
@@ -44,12 +45,6 @@ function imageUrl(source?: SanityImageSource, width = 1800): string | null {
   } catch {
     return null;
   }
-}
-
-function youtubeId(url?: string): string | null {
-  if (!url) return null;
-  const match = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
-  return match?.[1] ?? null;
 }
 
 const STATUS_LABEL: Record<string, string> = {
@@ -110,7 +105,7 @@ export default function ProjectDetail({ project }: { project: ProjectDetailData 
 
   const [currentChunk, setCurrentChunk] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const tourId = youtubeId(project.tourVideoUrl);
+  const tourId = getYouTubeId(project.tourVideoUrl);
 
   const prevChunk = useCallback(() => {
     if (chunks.length < 2) return;
@@ -421,6 +416,7 @@ export default function ProjectDetail({ project }: { project: ProjectDetailData 
               title={project.tourTitle || `${project.name} home tour`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
             />
           </div>
         </section>

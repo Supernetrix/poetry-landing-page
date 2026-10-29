@@ -2,57 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import SocialMediaDialog from "./SocialMediaDialog";
+import { GOOGLE_MAPS_URL, INSTAGRAM_URL, LINKEDIN_URL, YOUTUBE_CHANNEL_URL, type GoogleReviews, type InstagramReel, type SocialMedia, type YouTubeVideo } from "../lib/social";
 import "./SocialsPage.css";
-
-const INSTAGRAM = [
-  { src: "/spaces.jpg", caption: "Homes that breathe", layout: "tall" },
-  { src: "/greener-homes.png", caption: "Built for a better tomorrow", layout: "banner" },
-  { src: "/generations.jpg", caption: "Where light lives", layout: "box" },
-  { src: "/grandeur.jpg", caption: "Design Deeper\nLive Higher", layout: "top" },
-  { src: "/from-ideas-to-reality-2.png", caption: "Natural Materials Last Longer", layout: "split" },
-] as const;
-
-const VIDEOS = [
-  {
-    src: "/greener-homes.png",
-    title: "A home in harmony with nature",
-    meta: "Full project walkthrough",
-    duration: "12:46",
-    featured: true,
-  },
-  {
-    src: "/from-ideas-to-reality-1.png",
-    title: "The story behind Poetry",
-    meta: "Studio conversation",
-    duration: "8:15",
-    featured: false,
-  },
-  {
-    src: "/grandeur.jpg",
-    title: "From concept to construction",
-    meta: "Process film",
-    duration: "10:24",
-    featured: false,
-  },
-] as const;
-
-const REVIEWS = [
-  {
-    quote: "They held the design and the build in one conversation. We always knew what was happening, and why.",
-    name: "Arjun Mehta",
-    role: "Homeowner",
-  },
-  {
-    quote: "The house feels like us — quiet, practical, and considered. Nothing was added for show.",
-    name: "Nalini Rao",
-    role: "Homeowner",
-  },
-  {
-    quote: "Timelines held. Materials were what was promised. That is rarer than it should be.",
-    name: "Vikram Shah",
-    role: "Homeowner",
-  },
-] as const;
 
 const STUDIO = [
   { src: "/spaces.jpg", category: "Project", title: "Concept to reality", date: "Mar 12, 2024" },
@@ -61,22 +14,12 @@ const STUDIO = [
   { src: "/grandeur.jpg", category: "Ideas", title: "Light as a material", date: "Dec 08, 2023" },
 ] as const;
 
-function Stars() {
+function Stars({ rating }: { rating: number }) {
+  const filled = Math.max(0, Math.min(5, Math.round(rating)));
   return (
-    <span className="social-stars" aria-hidden="true">
-      ★★★★★
+    <span className="social-stars" role="img" aria-label={`${rating} out of 5 stars`}>
+      <span aria-hidden="true">{"★".repeat(filled)}{"☆".repeat(5 - filled)}</span>
     </span>
-  );
-}
-
-function GoogleMark() {
-  return (
-    <svg className="social-g" viewBox="0 0 24 24" aria-hidden="true">
-      <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5c-.3 1.5-1.1 2.7-2.4 3.6v3h3.8c2.3-2.1 3.6-5.2 3.6-8.7z" />
-      <path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.8-3c-1.1.7-2.4 1.2-4.1 1.2-3.1 0-5.8-2.1-6.7-5H1.3v3.1C3.3 21.4 7.4 24 12 24z" />
-      <path fill="#FBBC05" d="M5.3 14.3c-.2-.7-.4-1.4-.4-2.3s.1-1.6.4-2.3V6.6H1.3C.5 8.2 0 10 0 12s.5 3.8 1.3 5.4l4-3.1z" />
-      <path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.5 1.7l3.4-3.4C17.9 1.1 15.2 0 12 0 7.4 0 3.3 2.6 1.3 6.6l4 3.1c.9-2.9 3.6-5 6.7-5z" />
-    </svg>
   );
 }
 
@@ -109,10 +52,33 @@ function Band({
   );
 }
 
-export default function SocialsPage() {
-  const featured = VIDEOS[0];
-  const sideVideos = VIDEOS.slice(1);
+export default function SocialsPage({ reels, videos, reviews }: { reels: InstagramReel[]; videos: YouTubeVideo[]; reviews: GoogleReviews | null }) {
+  const featured = videos[0];
+  const sideVideos = videos.slice(1);
+  const [media, setMedia] = useState<SocialMedia | null>(null);
   const [activeItem, setActiveItem] = useState<(typeof STUDIO)[number] | null>(null);
+  const reviewsUrl = reviews?.url ?? GOOGLE_MAPS_URL;
+
+  const playYouTube = (video: YouTubeVideo) => setMedia({
+    kind: "youtube",
+    title: video.title,
+    src: `https://www.youtube.com/embed/${video.id}?autoplay=1&playsinline=1&rel=0&origin=${encodeURIComponent(window.location.origin)}`,
+    href: `https://www.youtube.com/watch?v=${video.id}`,
+    portrait: video.isShort,
+  });
+
+  const playReel = (reel: InstagramReel) => {
+    const src = reel.videoUrl || reel.embedUrl;
+    if (!src) return;
+    setMedia({
+      kind: reel.videoUrl ? "video" : "instagram",
+      title: reel.title,
+      src,
+      href: reel.embedUrl ? reel.embedUrl.replace(/embed\/$/, "") : null,
+      poster: reel.thumbnail,
+      portrait: true,
+    });
+  };
 
   useEffect(() => {
     if (!activeItem) return;
@@ -143,88 +109,84 @@ export default function SocialsPage() {
       </header>
 
       <section className="socials-block" aria-labelledby="social-ig-title">
-        <Band label="On Instagram" href="#" action="Follow us" extra="@poetry.designs" />
+        <Band label="On Instagram" href={INSTAGRAM_URL} action="Follow us" extra="@poetry_constructions" />
         <h2 id="social-ig-title" className="sr-only">
           On Instagram
         </h2>
-        <ul className="social-ig">
-          {INSTAGRAM.map((post) => (
-            <li key={post.caption} className={`social-ig__item social-ig__item--${post.layout}`}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={post.src} alt="" />
-              <div className="social-ig__caption">
-                {post.caption.split("\n").map((line) => (
-                  <span key={line}>{line}</span>
-                ))}
-                <span className="social-ig__caption-rule" aria-hidden="true" />
-              </div>
+        {reels.length ? <ul className="social-ig">
+          {reels.map((reel) => (
+            <li key={reel.id} className={`social-ig__item social-ig__item--${reel.layout}`}>
+              <button type="button" className="social-reel" onClick={() => playReel(reel)} aria-label={`Play ${reel.title}`}>
+                {reel.thumbnail ? <Image src={reel.thumbnail} alt="" width={640} height={800} sizes="(max-width: 700px) 100vw, 33vw" /> : <span className="social-reel__cover" />}
+                <span className="social-yt__play is-small" aria-hidden="true" />
+                <span className="social-ig__caption">
+                  <span>{reel.caption}</span>
+                  <span className="social-ig__caption-rule" aria-hidden="true" />
+                </span>
+              </button>
             </li>
           ))}
-        </ul>
+        </ul> : <p className="social-empty">Follow our Instagram for the latest reels, site visits and finished homes.</p>}
       </section>
 
       <section className="socials-block" aria-labelledby="social-yt-title">
-        <Band label="Watch Poetry" href="#" action="Visit our YouTube" />
+        <Band label="Watch Poetry" href={YOUTUBE_CHANNEL_URL} action="Visit our YouTube" />
         <h2 id="social-yt-title" className="sr-only">
           Watch Poetry
         </h2>
-        <div className="social-yt">
-          <a href="#" className="social-yt__feature">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={featured.src} alt="" />
+        {featured ? <div className="social-yt">
+          <button type="button" className="social-yt__feature" onClick={() => playYouTube(featured)} aria-label={`Play ${featured.title}`}>
+            <Image src={featured.thumbnail} alt="" fill loading="eager" sizes="(max-width: 1000px) 100vw, 60vw" />
             <span className="social-yt__play" aria-hidden="true" />
             <span className="social-yt__copy">
               <strong>{featured.title}</strong>
-              <em>{featured.meta}</em>
+              <em>{featured.isShort ? "YouTube Short" : "Latest from our channel"}</em>
             </span>
-            <span className="social-yt__time">{featured.duration}</span>
-          </a>
+          </button>
           <div className="social-yt__side">
             {sideVideos.map((video) => (
-              <a key={video.title} href="#" className="social-yt__clip">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={video.src} alt="" />
+              <button type="button" key={video.id} className="social-yt__clip" onClick={() => playYouTube(video)} aria-label={`Play ${video.title}`}>
+                <Image src={video.thumbnail} alt="" fill loading="eager" sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 35vw" />
                 <span className="social-yt__play is-small" aria-hidden="true" />
                 <span className="social-yt__copy">
                   <strong>{video.title}</strong>
                 </span>
-                <span className="social-yt__time">{video.duration}</span>
-              </a>
+              </button>
             ))}
           </div>
-        </div>
+        </div> : <p className="social-empty">Our latest films are available on the Poetry YouTube channel.</p>}
       </section>
 
       <section className="socials-block" aria-labelledby="social-reviews-title">
-        <Band label="What our clients say" href="#" action="Read all reviews" />
+        <Band label="What our clients say" href={reviewsUrl} action="Read all reviews" />
         <h2 id="social-reviews-title" className="sr-only">
           What our clients say
         </h2>
-        <div className="social-reviews">
+        {reviews ? <div className="social-reviews">
           <div className="social-reviews__score">
-            <p className="social-reviews__rating">
-              <span className="social-reviews__value">4.8</span>
+            {reviews.rating !== null ? <p className="social-reviews__rating">
+              <span className="social-reviews__value">{reviews.rating.toFixed(1)}</span>
               <span className="social-reviews__outof">/ 5</span>
-            </p>
-            <Stars />
+            </p> : null}
+            {reviews.rating !== null ? <Stars rating={reviews.rating} /> : null}
             <p className="social-reviews__label">Google Reviews</p>
-            <p className="social-reviews__tagline">
-              <span>Real people.</span>
-              <span>Real stories.</span>
-            </p>
+            {reviews.count !== null ? <p className="social-reviews__tagline">{reviews.count} reviews</p> : null}
+            <p className="social-reviews__tagline">Reviews ordered by relevance.</p>
+            <a className="social-google-attribution" href={reviewsUrl} translate="no">Google Maps</a>
           </div>
-          {REVIEWS.map((review) => (
-            <blockquote key={review.name} className="social-review">
-              <Stars />
-              <p>“{review.quote}”</p>
+          {reviews.reviews.map((review) => (
+            <blockquote key={review.id} className="social-review">
+              <Stars rating={review.rating} />
+              <p>“{review.text}”</p>
               <footer>
-                <cite>— {review.name}</cite>
-                <span>{review.role}</span>
+                {review.authorPhoto ? <Image className="social-review__avatar" src={review.authorPhoto} alt="" width={36} height={36} unoptimized /> : null}
+                <cite>{review.authorUrl ? <a href={review.authorUrl} target="_blank" rel="noopener noreferrer">{review.author}</a> : review.author}</cite>
+                <span>{review.relativeTime}</span>
+                <a href={review.url || reviewsUrl} target="_blank" rel="noopener noreferrer">Read on Google Maps ↗</a>
               </footer>
-              <GoogleMark />
             </blockquote>
           ))}
-        </div>
+        </div> : <p className="social-empty">Read our clients’ experiences on Google Maps.</p>}
       </section>
 
       <section className="socials-block" aria-labelledby="social-studio-title">
@@ -334,12 +296,13 @@ export default function SocialsPage() {
         </div>
         <span className="socials-close__rule" aria-hidden="true" />
         <nav aria-label="Social links">
-          <Link href="#">Instagram</Link>
-          <Link href="#">YouTube</Link>
-          <Link href="#">Google</Link>
-          <Link href="#">LinkedIn</Link>
+          <Link href={INSTAGRAM_URL}>Instagram</Link>
+          <Link href={YOUTUBE_CHANNEL_URL}>YouTube</Link>
+          <Link href={reviewsUrl}>Google</Link>
+          <Link href={LINKEDIN_URL}>LinkedIn</Link>
         </nav>
       </footer>
+      {media ? <SocialMediaDialog media={media} onClose={() => setMedia(null)} /> : null}
     </article>
   );
 }
